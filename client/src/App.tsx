@@ -29,7 +29,7 @@ function App() {
       .then((res) => res.json())
       .then((res) => {
         console.log("allusers response ", res);
-        const foundUsers = res.user as User[];
+        const foundUsers = res as User[];
         setAllUsers(foundUsers)
       })
       .catch(e => console.log(e));
