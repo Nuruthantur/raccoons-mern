@@ -11,7 +11,7 @@ const getAllUsers = async(req, res) => {
     try {
         const allUsers = await UserModel.find({}).select("-password");
         res.status(200).json({
-            status: "successfull", 
+            status: "successful", 
             number: allUsers.length,
             user: allUsers
         });

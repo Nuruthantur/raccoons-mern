@@ -27,6 +27,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     const [loading, setLoading] = useState(false);
 
     const signup = async(email: string, password: string) => {
+
         if (!email || !password) return alert("All fields must be included!");
         const headers = new Headers();
         headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -37,7 +38,9 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
             method: 'POST',
             headers,
             body
-        };
+        }; 
+
+
         try {
             const response = await fetch(`${baseUrl}/api/users/signup`, requestOptions);
             if (response.ok) {
