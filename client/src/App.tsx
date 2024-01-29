@@ -38,7 +38,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className='grid-flow-row'>
       { allUsers.map((user) => {
         return <div key={user._id}>
           <p>Email: {user.email}</p>
@@ -46,8 +46,8 @@ function App() {
           <p>User-ID: {user._id}</p>
         </div>
       }) }
-      <label>Find a user</label>
-      <input type="text" onChange={(e) => inputValue.current = e.target.value} />
+      <label>Find a user: </label>
+      <input className="text-sm text-slate-500 bg-slate-300" type="text" onChange={(e) => inputValue.current = e.target.value} />
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={handleClick}>Find a User</button>
       {foundOneUser && <div>
         <p>{foundOneUser.email}</p>
