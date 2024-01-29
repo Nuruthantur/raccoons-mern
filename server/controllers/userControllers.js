@@ -27,7 +27,7 @@ const findUserByEmail = async(req, res) => {
       if (!foundOneUser){
         return res.status(404).json({error: "No user found"})
       }
-      res.status(200).json({foundOneUser});  
+      res.status(200).json(foundOneUser);  
     }catch (e) {
       console.log("error ", e);
       res.status(500).json({error: "server error"})
