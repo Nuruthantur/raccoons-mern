@@ -9,6 +9,8 @@ import Users from './pages/Users.tsx'
 import TestPage from './pages/TestPage.tsx';
 import { AuthContextProvider } from './context/AuthContext.tsx';
 import Profile from './pages/Profile.tsx';
+//styling
+import './index.css'
 
 const router = createBrowserRouter([
   {
@@ -45,35 +47,6 @@ const router = createBrowserRouter([
     element: <Error404 />
   }
 ])
-
-
-
-
-
-// const router = createBrowserRouter([
-//     {
-//         element: (
-//             <Layout>
-//               <Outlet />
-//             </Layout>
-//         ),
-//         children: [
-//           {
-//             path: "/",
-//             element: <Homepage />,
-//           },
-//           {
-//             path: "/testpage",
-//             element: <TestPage />
-//           }
-//         ],
-//       },
-//       {
-//         path: "*",
-//         element: <Error404 />,
-//       },
-//     ]);
-
 
     ReactDOM.createRoot(document.getElementById('root')!).render(
       <React.StrictMode>

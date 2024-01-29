@@ -4,7 +4,7 @@ import { User } from '../@types/users';
 import baseUrl from '../utils/baseurl';
 
 
-const FindAUser = () => {
+const FindOneUser = () => {
   console.log(baseUrl);
   const [foundUser, setFoundUser] = useState<User | null>(null);
   const inputValue = useRef("");
@@ -37,7 +37,7 @@ const FindAUser = () => {
   }
   return (
     <>
-      <h1>Find A Friend!</h1>
+      <h1>Find A User!</h1>
       <label>Find a user: </label>
       <input type="text" onChange={(e) => inputValue.current = e.target.value} />
       <button onClick={handleClick}>Find User</button>
@@ -51,4 +51,4 @@ const FindAUser = () => {
   )
 }
 
-export default FindAUser
+export default FindOneUser

@@ -1,12 +1,13 @@
-import '../App.css'
+import '../index.css'
 
 const Homepage = () => {
 
     return (
-        <div>
-          <h1>This is the homepage</h1>
+        <div className="grid-flow-row border-solid">
+          <h1 className="text-3xl font-bold underline">This is the homepage</h1>
           <p>Welcome to my App! You may or may not be able to write some todo lists here in the future!</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dolor deleniti aliquid repudiandae voluptate, quaerat quos tempore accusamus. Natus quae unde saepe facilis vel nobis animi cupiditate soluta blanditiis doloribus?</p>
+          <p>Here is going to be some description of my App. So far this is empty. .............</p>
+          <button className={'border-solid'}>Save Changes</button>
         </div>
     )
   }

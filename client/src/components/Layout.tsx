@@ -1,5 +1,6 @@
 import React from "react";
 import NavBar from "./Navbar.tsx";
+import "../index.css"
 
 
 type Props = {

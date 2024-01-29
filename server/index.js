@@ -26,10 +26,6 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
   });
 }).catch(e => console.log("error", e));
 
-// app.get('/', (req, res) => {
-//   res.send('Hi Mom!')
-// })
-
-
-
-
+app.get('/', (req, res) => {
+  res.send('Hi Mom!')
+})

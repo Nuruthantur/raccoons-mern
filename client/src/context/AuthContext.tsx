@@ -39,8 +39,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
             headers,
             body
         }; 
-
-
         try {
             const response = await fetch(`${baseUrl}/api/users/signup`, requestOptions);
             if (response.ok) {
@@ -71,6 +69,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
             if (response.ok) {
                 const result = await response.json() as User;
                 setUser(result);
+                console.log(result);
             } else {
                 const result = await response.json() as ResNotOk;
                 console.log(result)
@@ -80,7 +79,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         }
     }
     
-
     const updateUser = async(values: {email: string, username: string | undefined}) => {
         //validation - check email format etc.
         if (!user) return
