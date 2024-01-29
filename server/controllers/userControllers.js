@@ -20,4 +20,18 @@ const getAllUsers = async(req, res) => {
     }
 }
 
-export { test, getAllUsers }
+const findUserByEmail = async(req, res) => {
+    console.log(req.params);
+    try {
+      const foundOneUser = await UserModel.findOne({email: req.params.email}).select("-password")
+      if (!foundOneUser){
+        return res.status(404).json({error: "No user found"})
+      }
+      res.status(200).json({foundOneUser});  
+    }catch (e) {
+      console.log("error ", e);
+      res.status(500).json({error: "server error"})
+    }
+  }
+
+export { test, getAllUsers, findUserByEmail }
