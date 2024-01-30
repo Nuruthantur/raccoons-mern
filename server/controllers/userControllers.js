@@ -1,7 +1,5 @@
 import UserModel from "../models/userModels.js";
 
-
-
 const test = (req, res) => {
     console.log("testing successful");
     res.send("testing successful")
