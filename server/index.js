@@ -18,11 +18,11 @@ app.use(
 
 app.use(cors());
 
+app.use("/tasks", taskRouter);
 app.use("/api/users", userRouter);  
 app.use('*', (req, res) => res.status(404).json({ error: "Endpoint not found!" })); 
 
-app.use("/tasks", taskRouter);
-app.use('*', (req, res) => res.status(404).json( {error: "This endpoint doesn't exist!"}))
+// app.use('*', (req, res) => res.status(404).json( {error: "This endpoint doesn't exist!"}))
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   app.listen(port, () => {

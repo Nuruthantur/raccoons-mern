@@ -1,13 +1,13 @@
 import  express  from "express";
 import testing from "../controllers/taskControllers.js";
 
-const taskRouter = express.Router()
+const router = express.Router()
 
-taskRouter.get("/testing", testing) 
+router.get("/testing", testing) 
 
 // taskRouter.get('/task', async (req, res) => { 
 //     const tasks = await task.find(); 
 //     res.json(tasks); console.log(tasks)});
 
-export default taskRouter
+export default router
 
