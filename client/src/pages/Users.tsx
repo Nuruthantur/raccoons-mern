@@ -21,9 +21,9 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className='grid-cols-1'>
       <FindOneUser />
-      <h2>Here are all users:</h2>
+      <h2>Here's a list of all subscribed users:</h2>
       { allUsers.map((user) => {
         return <div key={user._id}>
           <p>{user.email}</p>
