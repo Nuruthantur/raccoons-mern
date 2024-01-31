@@ -7,11 +7,14 @@ const testing = (req, res) => {
 
 const getAllTasks = async (req, res) => {
   try {
-    const allTasks = await TaskModel.find({}).select("-password");
+    const allTasks = await TaskModel.find({}).populate({
+      path: "user",
+      select: "email",
+    });
     res.status(200).json({
       status: "success",
       number: allTasks.length,
-      task: allTasks,
+      allTasks,
     });
   } catch (e) {
     console.log("error for getAllTasks", e);

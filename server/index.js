@@ -22,7 +22,7 @@ const addRoutes = () => {
   app.use("/api/tasks", taskRouter);
   app.use("/api/users", userRouter);
   app.use("*", (req, res) =>
-    res.status(404).json({ error: "Endpoint not found!" })
+    res.status(404).json({ error: "Endpoint not found!".bgRed })
   );
 };
 
@@ -30,13 +30,16 @@ const startServer = () => {
   const port = process.env.PORT || 8080;
 
   app.listen(port, () => {
-    console.log("Mongoose connected, server is running on port: " + port);
+    console.log(
+      "Mongoose connected, server is running on port: ".bgMagenta + port
+    );
   });
 };
 
 const DbConnection = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
+    console.log("Established connection to MongoDB".bgCyan);
   } catch (error) {
     console.log("error connecting to MongoDb".bgRed, error);
   }

@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/testing", testing);
 router.get("/all-tasks", getAllTasks);
-router.get("/find-task", findTaskByName);
+router.get("/find/:taskName", findTaskByName);
 
 // taskRouter.get('/task', async (req, res) => {
 //     const tasks = await task.find();
