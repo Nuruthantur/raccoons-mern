@@ -15,21 +15,23 @@ app.use(
     extended: true,
   })
 );
-
 app.use(cors());
 
-app.use("/tasks", taskRouter);
-app.use("/api/users", userRouter);  
-app.use('*', (req, res) => res.status(404).json({ error: "Endpoint not found!" })); 
+app.use("/api/tasks", taskRouter);
+app.use("/api/users", userRouter);
+app.use("*", (req, res) =>
+  res.status(404).json({ error: "Endpoint not found!" })
+);
 
-// app.use('*', (req, res) => res.status(404).json( {error: "This endpoint doesn't exist!"}))
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(port, () => {
+      console.log("Mongoose connected, server is running on port: " + port);
+    });
+  })
+  .catch((e) => console.log("error", e));
 
-mongoose.connect(process.env.MONGO_URI).then(() => {
-  app.listen(port, () => {
-    console.log("Mongoose connected, server is running on port: " + port);
-  });
-}).catch(e => console.log("error", e));
-
-app.get('/', (req, res) => {
-  res.send('Hi Mom!')
-})
+app.get("/", (req, res) => {
+  res.send("Hi Mom!");
+});
