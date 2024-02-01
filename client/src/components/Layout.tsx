@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "./Navbar.tsx";
 import "../index.css";
+import Footer from "./Footer.tsx";
 
 type Props = {
   children: React.ReactNode;
@@ -9,11 +10,12 @@ type Props = {
 function Layout({ children }: Props) {
   return (
     <>
-      <div className="max-w-30">
-        {/* bg-gradient-to-b from-purple-700 to-purple-500 p-4 */}
+      <div className="bg-gradient-to-b from-purple-700 to-purple-500 flex flex-col h-screen justify-between">
+        {/* bg-gradient-to-b from-purple-700 to-purple-500  h-10 min-h-screen */}
         <NavBar />
-        <div className="bg-gradient-to-b from-purple-700 to-purple-500 p-4">
-          {children}
+        <div className="">{children}</div>
+        <div className="h-10 bg-blue-500">
+          <Footer />
         </div>
       </div>
     </>

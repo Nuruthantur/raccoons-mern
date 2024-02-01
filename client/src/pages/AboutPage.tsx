@@ -2,15 +2,12 @@ export default function TestPage() {
   return (
     <div className="relative py-12 md:py-24 lg:py-32 bg-body overflow-hidden">
       <div className="relative container mx-auto px-4">
-        <div className="absolute top-0 right-0 w-186 h-186 bg-gradient-to-t from-violet-900 to-darkBlue-900 rounded-full filter blur-4xl"></div>
         <div className="relative max-w-md md:max-w-8xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-black tracking-tight mb-6">
               How does this App work
             </h2>
-            <p className="text-xl text-gray-400">
-              Mi turpis turpis in justo pellentesque id nibh praesent.
-            </p>
+            <p className="text-xl text-gray-400">Oliver mensuram est! </p>
           </div>
           <div className="flex flex-wrap items-center -mx-4 mb-16">
             <div className="w-full md:w-1/2 px-4 mb-8 md:mb-0">

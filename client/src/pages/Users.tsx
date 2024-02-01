@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { User } from '../@types/users';
-import baseUrl from '../utils/baseurl';
-import FindOneUser from '../components/FindAUser';
+import { useEffect, useState } from "react";
+import { User } from "../@types/users";
+import baseUrl from "../utils/baseurl";
+import FindOneUser from "../components/FindAUser";
 
 function App() {
   const [allUsers, setAllUsers] = useState<User[]>([]);
@@ -13,24 +13,28 @@ function App() {
         .then((res) => {
           const foundUsers = res.user as User[];
           setAllUsers(foundUsers);
-
         })
-        .catch(e => console.log(e));
-    }
-    fetchAllUsers()
+        .catch((e) => console.log(e));
+    };
+    fetchAllUsers();
   }, []);
 
   return (
-    <div className='grid-cols-1'>
-      <FindOneUser />
+    <div className="flex flex-col items-center">
+      <div>
+        <FindOneUser />
+      </div>
+      {/* <FindOneUser /> */}
       <h2>Here's a list of all subscribed users:</h2>
-      { allUsers.map((user) => {
-        return <div key={user._id}>
-          <p>{user.email}</p>
-        </div>
-      }) }
+      {allUsers.map((user) => {
+        return (
+          <div key={user._id}>
+            <p>{user.email}</p>
+          </div>
+        );
+      })}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
