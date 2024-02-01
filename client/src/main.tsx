@@ -1,55 +1,62 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Error404 from "./pages/Error404.tsx";
 import Layout from "./components/Layout.tsx";
 import Homepage from "./pages/Homepage.tsx";
-import AuthPage from './pages/AuthPage.tsx';
-import Users from './pages/Users.tsx'
-import TestPage from './pages/TestPage.tsx';
-import { AuthContextProvider } from './context/AuthContext.tsx';
-import Profile from './pages/Profile.tsx';
+import AuthPage from "./pages/AuthPage.tsx";
+import Users from "./pages/Users.tsx";
+import TestPage from "./pages/AboutPage.tsx";
+import { AuthContextProvider } from "./context/AuthContext.tsx";
+import Profile from "./pages/Profile.tsx";
 //styling
-import './index.css'
+import "./index.css";
+import TasksPage from "./pages/TasksPage.tsx";
 
 const router = createBrowserRouter([
   {
-    element:  <AuthContextProvider>
-                <Layout>
-                  <Outlet />
-                </Layout>
-              </AuthContextProvider>,
+    element: (
+      <AuthContextProvider>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </AuthContextProvider>
+    ),
     children: [
       {
         path: "/",
-        element: <Homepage />
+        element: <Homepage />,
       },
       {
         path: "/users",
-        element: <Users />
+        element: <Users />,
       },
       {
         path: "/testpage",
-        element: <TestPage />
+        element: <TestPage />,
       },
       {
         path: "/auth",
-        element: <AuthPage />
+        element: <AuthPage />,
       },
       {
         path: "/profile",
-        element: <Profile />
-      }
-    ]
+        element: <Profile />,
+      },
+      {
+        path: "/tasks",
+        element: <TasksPage />,
+      },
+    ],
   },
   {
     path: "*",
-    element: <Error404 />
-  }
-])
+    element: <Error404 />,
+  },
+]);
 
-    ReactDOM.createRoot(document.getElementById('root')!).render(
-      <React.StrictMode>
-        <RouterProvider router={router} />
-      </React.StrictMode>,
-    )
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);

@@ -9,7 +9,7 @@ const getAllUsers = async (req, res) => {
   try {
     const allUsers = await UserModel.find({})
       .select("-password")
-      .populate({ path: "tasklist" });
+      .populate({ path: "tasklist", select: "name" });
     res.status(200).json({
       status: "successful",
       number: allUsers.length,
