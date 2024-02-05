@@ -6,7 +6,7 @@ import "../index.css";
 function NavBar() {
   const { user, logout } = useContext(AuthContext);
   return (
-    <div className="relative bg-body overflow-hidden">
+    <div className="relative bg-body ">
       <nav className="relative z-10 py-7">
         {/*nav className: flex justify-evenly gap-1 align-center */}
         <div className="container mx-auto px-4">

@@ -40,4 +40,15 @@ const findTaskByName = async (req, res) => {
   }
 };
 
-export { testing, getAllTasks, findTaskByName };
+const createNewTask = async (req, res) => {
+  const newTask = await TaskModel.create(req.body);
+  try {
+    res.status(201).json({ newTask });
+    console.log(newTask);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ error: "server error" });
+  }
+};
+
+export { testing, getAllTasks, findTaskByName, createNewTask };

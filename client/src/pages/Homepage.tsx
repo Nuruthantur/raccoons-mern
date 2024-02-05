@@ -9,13 +9,11 @@ const Homepage = () => {
           <h1 className="text-3xl font-bold underline mt-auto mb-4">
             This is the homepage
           </h1>
+          <p className="mb-4">OLIVER MENSURA EST!</p>
           <p className="mb-4">
-            Welcome to my App! You may or may not be able to write some todo
-            lists here in the future!
-          </p>
-          <p className="mb-4">
-            Here is going to be some description of my App. So far this is
-            empty. .............
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+            est excepturi ipsum iusto enim, harum, quos vitae libero quae eius
+            rem qui tenetur illo. Voluptates ipsa iste nam veritatis minus?
           </p>
           <button className={"border-solid"}>BUTTON</button>
         </div>
