@@ -1,6 +1,8 @@
+import useVisibility from "../hooks/visibilityHook";
 import "../index.css";
 
 const Homepage = () => {
+  const [dialogVisibility, handleDialogVisiblity] = useVisibility(false);
   return (
     <div className="w-full h-100 gap-3">
       <div className="grid grid-cols-2 grid-rows-1 gap-4">
