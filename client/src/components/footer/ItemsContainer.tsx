@@ -1,4 +1,4 @@
-import Item from "./Item";
+import { Item } from "./Item";
 import { Community, Company, Developers, Products, Support } from "./Menus";
 
 const ItemsContainer = () => {
