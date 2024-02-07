@@ -1,9 +1,4 @@
 {
-    "cSpell.ignoreWords": [
-        "allusers"
-    ],
-    "cSpell.words": [
-        "signup",
-        "testpage"
-    ]
+  "cSpell.ignoreWords": ["allusers"],
+  "cSpell.words": ["Habitica", "signup", "testpage"]
 }

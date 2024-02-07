@@ -12,11 +12,9 @@ function NavBar() {
   return (
     <div className="relative bg-body ">
       <nav className="relative z-10 py-7">
-        {/*nav className: flex justify-evenly gap-1 align-center */}
         <div className="container mx-auto px-4">
           <div className="relative flex items-center justify-between">
             <div>
-              {/* className="inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full" */}
               <NavLink
                 to={"/"}
                 className={({ isActive }) => {
@@ -48,7 +46,7 @@ function NavBar() {
             </div>
             <div>
               <NavLink
-                to={"/testpage"}
+                to={"/about"}
                 className={({ isActive }) => {
                   return (
                     "inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase    rounded-full" +

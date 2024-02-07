@@ -1,6 +1,6 @@
-export default function TestPage() {
+export default function AboutPage() {
   return (
-    <div className="relative py-12 md:py-24 lg:py-32 bg-body">
+    <div className="relative py-12 md:py-24 lg:py-32 ">
       <div className="relative container mx-auto px-4">
         <div className="relative max-w-md md:max-w-8xl mx-auto">
           <div className="text-center mb-14">

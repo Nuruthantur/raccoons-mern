@@ -6,7 +6,7 @@ import Layout from "./components/Layout.tsx";
 import Homepage from "./pages/Homepage.tsx";
 import AuthPage from "./pages/AuthPage.tsx";
 import Users from "./pages/Users.tsx";
-import TestPage from "./pages/AboutPage.tsx";
+import AboutPage from "./pages/AboutPage.tsx";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
 import Profile from "./pages/Profile.tsx";
 //styling
@@ -32,8 +32,8 @@ const router = createBrowserRouter([
         element: <Users />,
       },
       {
-        path: "/testpage",
-        element: <TestPage />,
+        path: "/about",
+        element: <AboutPage />,
       },
       {
         path: "/auth",
