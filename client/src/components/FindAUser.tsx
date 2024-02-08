@@ -44,7 +44,7 @@ const FindOneUser = () => {
   };
   return (
     <>
-      <div className=" ">
+      <div className="mx-auto text-center rounded-lg mt-auto mb-auto flex flex-col justify-center">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">

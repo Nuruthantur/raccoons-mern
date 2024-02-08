@@ -4,12 +4,12 @@ import ItemsContainer from "./ItemsContainer";
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="md:flex md:flex-col md:justify-between md:items-center sm:px-12 px-4 bg-purple-900 py-7 gap-10">
+      <div className="md:flex md:flex-col md:justify-between md:items-center sm:px-12 px-4 bg-purple-900 py-7 gap-7">
         <div>
-          <h3>
+          <h1>
             Join over 10 billion people having fun while accomplishing their
             goals!
-          </h3>
+          </h1>
         </div>
         <div>
           <a
@@ -29,10 +29,9 @@ const Footer = () => {
         <span>© 2024 All rights reserved.</span>
         <span>Terms · Privacy Policy</span>
       </div>
-      <div className="flex flex-row flex-wrap justify-center content-center place-items-center">
-        <div>
-          <IconsContainer />
-        </div>
+      <div className="">
+        {/* flex justify-center  */}
+        <IconsContainer />
       </div>
     </footer>
   );

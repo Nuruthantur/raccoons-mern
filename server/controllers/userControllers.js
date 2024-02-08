@@ -1,4 +1,5 @@
 import UserModel from "../models/userModels.js";
+import { encryptUserPassword } from "../utils/passwordServices.js";
 
 const test = (req, res) => {
   console.log("testing successful");
@@ -40,13 +41,43 @@ const findUserByEmail = async (req, res) => {
 const signup = async (req, res) => {
   console.log(req.body);
   const { email, password, username } = req.body;
-  if (!email || !password)
-    return res.status(400).json({ error: "No fields must be empty" });
+  if (email === "undefined" || password === "undefined") {
+    res.status(400).json({ error: "No field must be empty!" });
+    return;
+  }
   try {
-    const newUser = await UserModel.create({ email, password, username });
-    console.log(newUser);
-    if (newUser) res.status(201).json(newUser);
-    else res.status(400).json({ error: "User couldn't be created" });
+    // if all credentials provided, we check if user is already in database
+
+    const existingUser = await UserModel.findOne({ email: email });
+    console.log("existing User -->", existingUser);
+    // check if user with this email already exists in the db
+    if (existingUser) {
+      res.status(400).json({ error: "Email already registered" });
+    }
+    // if there's no user with this email in the db
+    if (!existingUser) {
+      // encrypt password
+
+      try {
+        const hashedPassword = await encryptUserPassword(password);
+        if (!hashedPassword) {
+          res.status(500).json({ message: "problem encoding password" });
+        }
+        if (hashedPassword) {
+          const newUser = await UserModel.create({
+            email: email,
+            password: hashedPassword,
+            userName: username,
+          });
+          console.log("newUser", newUser);
+          if (newUser) {
+            res.status(201).json(newUser);
+          } else res.status(400).json({ error: "User couldn't be created" });
+        }
+      } catch (error) {
+        console.log("sth very very bad happened ^^", error);
+      }
+    }
   } catch (error) {
     console.log(error);
     if (error.code === 11000)

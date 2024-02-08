@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     const fetchAllUsers = () => {
       fetch(`${baseUrl}/api/users/all`)
-        .then((res) => res.json())
+        .then((response) => response.json())
         .then((res) => {
           const foundUsers = res.user as User[];
           setAllUsers(foundUsers);

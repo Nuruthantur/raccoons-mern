@@ -4,7 +4,7 @@ import { RandomIcons } from "./Menus";
 const IconsContainer = () => {
   return (
     <div>
-      <IconMap Links={RandomIcons} title="Icons" />
+      <IconMap Links={RandomIcons} />
     </div>
   );
 };

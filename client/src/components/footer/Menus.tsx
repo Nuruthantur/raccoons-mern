@@ -18,12 +18,13 @@ const Company = [
   { name: "Press", link: "#" },
   { name: "Blog", link: "#" },
   { name: "News", link: "#" },
+  { name: "new Item", link: "#" },
 ];
 const Community = [
   { name: "Community Guidelines", link: "#" },
   { name: "Hall of Heroes", link: "#" },
-  { name: "Contributing to Habitica", link: "#" },
-  { name: "Translate Habitica", link: "#" },
+  { name: "Contributing", link: "#" },
+  { name: "Translate", link: "#" },
 ];
 const Support = [
   { name: "FAQ", link: "#" },

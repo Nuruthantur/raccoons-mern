@@ -17,6 +17,7 @@ export default function Header(props) {
 
   return (
     <>
+      {/* background bg-gray-900 */}
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>

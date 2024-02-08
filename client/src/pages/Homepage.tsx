@@ -18,6 +18,21 @@ const Homepage = () => {
             rem qui tenetur illo. Voluptates ipsa iste nam veritatis minus?
           </p>
           <button className={"border-solid"}>BUTTON</button>
+          <p className="mb-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+            est excepturi ipsum iusto enim, harum, quos vitae libero quae eius
+            rem qui tenetur illo. Voluptates ipsa iste nam veritatis minus?
+          </p>
+          <p className="mb-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+            est excepturi ipsum iusto enim, harum, quos vitae libero quae eius
+            rem qui tenetur illo. Voluptates ipsa iste nam veritatis minus?
+          </p>
+          <p className="mb-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+            est excepturi ipsum iusto enim, harum, quos vitae libero quae eius
+            rem qui tenetur illo. Voluptates ipsa iste nam veritatis minus?
+          </p>
         </div>
         {/* </div> */}
         <div className="flex justify-center items-center">
