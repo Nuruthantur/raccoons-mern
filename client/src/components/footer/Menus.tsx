@@ -11,6 +11,7 @@ const Products = [
   { name: "Android App", link: "#" },
   { name: "Group Plans", link: "#" },
   { name: "How It Works", link: "#" },
+  { name: "Here is royal stuff", link: "#" },
 ];
 const Company = [
   { name: "Contact us", link: "#" },

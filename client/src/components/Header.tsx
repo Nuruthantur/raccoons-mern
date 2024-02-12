@@ -1,5 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { useContext } from "react";
+import { Disclosure } from "@headlessui/react";
+import { BellIcon } from "@heroicons/react/24/solid";
+// import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
 const navigation = [
@@ -8,12 +10,12 @@ const navigation = [
   { name: "Test", href: "/testpage" },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 export default function Header(props) {
-  const [loggedIn, setLoggedIn] = useContext(LoginContext);
+  // const [loggedIn, setLoggedIn] = useContext(LoginContext);
 
   return (
     <>
@@ -21,14 +23,14 @@ export default function Header(props) {
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>
-            <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-              <div className="relative flex items-center justify-between h-14">
+            <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 ">
+              <div className="relative flex items-center justify-between h-14 ">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   {/* Mobile menu button*/}
                   <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
-                      <XIcon className="block h-6 w-6" aria-hidden="true" />
+                      <bars-3 className="block h-6 w-6" aria-hidden="true" />
                     ) : (
                       <MenuIcon className="block h-6 w-6" aria-hidden="true" />
                     )}

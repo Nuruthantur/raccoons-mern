@@ -19,7 +19,7 @@ export default function AboutPage() {
                 />
                 <img
                   className="relative w-87 h-87 rounded-tl-3xl object-cover"
-                  src="https://placehold.co/600x400"
+                  src="https://cdnb.artstation.com/p/assets/images/images/050/253/713/large/alexander-johnson-tailsofiron-redgi-colored.jpg?1654436299"
                   alt=""
                 />
               </div>
@@ -61,7 +61,7 @@ export default function AboutPage() {
                 />
                 <img
                   className="relative w-87 h-87 rounded-tl-3xl object-cover"
-                  src="https://placehold.co/600x400"
+                  src="https://mp1st.com/wp-content/uploads/2021/06/talesofironpic.jpg"
                   alt=""
                 />
               </div>
@@ -77,7 +77,7 @@ export default function AboutPage() {
                 />
                 <img
                   className="relative w-87 h-87 rounded-tl-3xl object-cover"
-                  src="https://placehold.co/600x400"
+                  src="https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2021/11/tails-iron-2542879.jpg?tf=2048x"
                   alt=""
                 />
               </div>

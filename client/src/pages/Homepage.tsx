@@ -36,7 +36,10 @@ const Homepage = () => {
         </div>
         {/* </div> */}
         <div className="flex justify-center items-center">
-          <h1 className="text-white">some picture</h1>
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/606d159a953867291018f801/1619987265163-9XILMVT3TK4HZ5X6538M/VH_01_1080pjpg.jpg"
+            alt=""
+          />
         </div>
       </div>
     </div>

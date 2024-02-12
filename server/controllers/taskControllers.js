@@ -51,4 +51,8 @@ const createNewTask = async (req, res) => {
   }
 };
 
+// const deleteTask = async (req, res) => {
+//   const result = await TaskModel.findByIdAndDelete(req.params.id);
+// };
+
 export { testing, getAllTasks, findTaskByName, createNewTask };

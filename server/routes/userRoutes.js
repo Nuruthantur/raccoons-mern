@@ -18,7 +18,7 @@ userRouter.get("/find/:email", findUserByEmail);
 userRouter.post("/signup", signup);
 userRouter.post("/login", login);
 userRouter.post("/update/:id", updateUser);
-userRouter.post("task/new", createNewTask);
+userRouter.post("/task/new", createNewTask);
 userRouter.post("/task/delete");
 
 export default userRouter;

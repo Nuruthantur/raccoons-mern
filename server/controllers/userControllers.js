@@ -86,27 +86,60 @@ const signup = async (req, res) => {
   }
 };
 
+// const login = async (req, res) => {
+//   console.log(req.body);
+//   const { email, password } = req.body;
+//   if (!email || !password)
+//     return res.status(400).json({ error: "No fields must be empty!" });
+//   try {
+//     const foundUser = await UserModel.findOne({ email });
+//     if (!foundUser)
+//       return res.status(404).json({ error: "No user with that email!" });
+//     if (foundUser.password === password) {
+//       const user = {
+//         _id: foundUser._id,
+//         email: foundUser.email,
+//         username: foundUser.username,
+//         createdAt: foundUser.createdAt,
+//       };
+//       return res.status(200).json(user);
+//     } else res.status(400).json({ error: "Password incorrect!" });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: "Something went wrong! :(" });
+//   }
+// };
+
 const login = async (req, res) => {
-  console.log(req.body);
-  const { email, password } = req.body;
-  if (!email || !password)
-    return res.status(400).json({ error: "No fields must be empty!" });
+  if (!req.body.password || !req.body.email) {
+    console.log("no credentials");
+    res.status(500).json({
+      message: "required fields are missing",
+      error: true,
+      data: null,
+    });
+    return;
+  }
+  // console.log("credentials", req.body);
   try {
-    const foundUser = await UserModel.findOne({ email });
-    if (!foundUser)
-      return res.status(404).json({ error: "No user with that email!" });
-    if (foundUser.password === password) {
-      const user = {
-        _id: foundUser._id,
-        email: foundUser.email,
-        username: foundUser.username,
-        createdAt: foundUser.createdAt,
-      };
-      return res.status(200).json(user);
-    } else res.status(400).json({ error: "Password incorrect!" });
+    const existingUser = await UserModel.findOne({ email: req.body.email });
+    console.log("existing user: ", existingUser);
+
+    // A there is no user in DB
+    if (!existingUser) {
+      res.status(500).json({
+        message: "user needs to register first",
+        error: true,
+        data: null,
+      });
+    }
+
+    // B email exists in DB
+    if (existingUser) {
+      //B.1 check password (verify)
+    }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Something went wrong! :(" });
+    console.log("error from existingUser", error);
   }
 };
 
