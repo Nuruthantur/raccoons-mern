@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
+// import dotenv from "dotenv";
 
 //pages
 import Error404 from "./pages/Error404.tsx";

@@ -1,5 +1,9 @@
 import UserModel from "../models/userModels.js";
-import { encryptUserPassword } from "../utils/passwordServices.js";
+import {
+  encryptUserPassword,
+  verifyPassword,
+} from "../utils/passwordServices.js";
+import { generateToken } from "../utils/tokenServices.js";
 
 const test = (req, res) => {
   console.log("testing successful");
@@ -120,11 +124,10 @@ const login = async (req, res) => {
     });
     return;
   }
-  // console.log("credentials", req.body);
+  console.log("credentials", req.body);
   try {
     const existingUser = await UserModel.findOne({ email: req.body.email });
     console.log("existing user: ", existingUser);
-
     // A there is no user in DB
     if (!existingUser) {
       res.status(500).json({
@@ -133,13 +136,57 @@ const login = async (req, res) => {
         data: null,
       });
     }
-
     // B email exists in DB
     if (existingUser) {
-      //B.1 check password (verify)
+      //B1 check password (verify)
+      const isPasswordCorrect = await verifyPassword(
+        req.body.password,
+        existingUser.password
+      );
+      //C1 passwords do NOT match
+      if (!isPasswordCorrect) {
+        res.status(500).json({
+          message: "passwords do not match!",
+          error: true,
+          data: null,
+        });
+      }
+      //C 2 passwords DO match
+      if (isPasswordCorrect) {
+        //D generate Token
+        const token = generateToken(existingUser._id);
+        // D 1 token is NOT generated
+        if (!token) {
+          res.status(500).json({
+            message: "something went wrong generating the token",
+            error: true,
+            data: null,
+          });
+        }
+        //D2 token is generated
+        if (token) {
+          const user = {
+            username: existingUser.username,
+            email: existingUser.email,
+          };
+          res.status(200).json({
+            message: "user logged in",
+            error: false,
+            data: {
+              user: user,
+              token,
+            },
+          });
+        }
+      }
     }
   } catch (error) {
     console.log("error from existingUser", error);
+    res.status(500).json({
+      message: "an unexpected error happened here",
+      error: true,
+      data: null,
+    });
   }
 };
 
