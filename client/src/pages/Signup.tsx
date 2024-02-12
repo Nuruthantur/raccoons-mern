@@ -64,11 +64,15 @@ const Signup = () => {
   };
 
   return (
-    <>
+    // "flex flex-col items-center justify-center h-screen"
+    <div className="flex flex-col items-center justify-center h-screen">
       <h1>Sign up page goes here</h1>
       <div>
-        <div>
-          <form onSubmit={(e) => void handleSubmitRegister(e)}>
+        <div className="flex flex-col">
+          <form
+            className="flex flex-col"
+            onSubmit={(e) => void handleSubmitRegister(e)}
+          >
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -103,7 +107,7 @@ const Signup = () => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default Signup;

@@ -17,7 +17,12 @@ const Homepage = () => {
             est excepturi ipsum iusto enim, harum, quos vitae libero quae eius
             rem qui tenetur illo. Voluptates ipsa iste nam veritatis minus?
           </p>
-          <button className={"border-solid"}>BUTTON</button>
+          <button
+            className="bg-purple-800 hover:bg-purple-900 duration-300 px-5 py-2.5 font-[Poppins]
+           rounded-md text-white md:w-auto w-full"
+          >
+            LOGIN
+          </button>
           <p className="mb-4">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
             est excepturi ipsum iusto enim, harum, quos vitae libero quae eius
