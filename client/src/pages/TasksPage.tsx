@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Task } from "../@types/tasks";
 import baseUrl from "../utils/baseurl";
+import AllTasksList from "../components/AllTasks";
 type AllTasksResponse = {
   allTasks: Task[];
   number: number;
@@ -26,20 +27,24 @@ export default function TasksPage() {
   }, []);
 
   return (
-    <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col justify-center">
-      <h1>test</h1>
-      <h2>here is a list of all tasks</h2>
+    <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col justify-center  h-screen">
+      <h1 className="font-bold text-xl mb-2">Here is a list of your tasks!</h1>
+      {/* <AllTasksList /> */}
       <br />
 
       {allTasks?.map((task) => {
         return (
           <div
-            key={task._id}
             className="mx-auto text-center  mt-auto mb-auto flex flex-col justify-center"
+            key={task._id}
           >
-            <p>{task.taskName}</p>
-            <br />
-            <p>{task.description}</p>
+            <div className="max-w-sm rounded overflow-hidden shadow-lg">
+              <div className="px-6 py-4">
+                <div className="font-bold text-xl mb-2">{task.taskName}</div>
+                <br />
+                <p className="text-gray-700 text-base">{task.description}</p>
+              </div>
+            </div>
           </div>
         );
       })}

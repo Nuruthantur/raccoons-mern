@@ -3,16 +3,17 @@ import {
   testing,
   getAllTasks,
   findTaskByName,
+  createNewTask,
+  deleteTask,
 } from "../controllers/taskControllers.js";
 
-const router = express.Router();
+const taskRouter = express.Router();
 
-router.get("/testing", testing);
-router.get("/all-tasks", getAllTasks);
-router.get("/find/:taskName", findTaskByName);
+taskRouter.get("/testing", testing);
+taskRouter.get("/all-tasks", getAllTasks);
+taskRouter.get("/find/:taskName", findTaskByName);
+taskRouter.post("/task/new", createNewTask);
+taskRouter.post("/task/delete/:id", deleteTask);
+taskRouter.post("/task/update/:id"); //updateTask
 
-// taskRouter.get('/task', async (req, res) => {
-//     const tasks = await task.find();
-//     res.json(tasks); console.log(tasks)});
-
-export default router;
+export default taskRouter;

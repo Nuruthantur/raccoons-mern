@@ -56,7 +56,8 @@ const signup = async (req, res) => {
     console.log("existing User -->", existingUser);
     // check if user with this email already exists in the db
     if (existingUser) {
-      res.status(400).json({ error: "Email already registered" });
+      res.status(401).json({ error: "Email already registered" });
+      // alert("A user with this Email address already exists!");
     }
     // if there's no user with this email in the db
     if (!existingUser) {

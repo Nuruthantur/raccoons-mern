@@ -20,12 +20,11 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center justify-center h-screen">
       <div>
         <FindOneUser />
       </div>
-      {/* <FindOneUser /> */}
-      <h2>Here's a list of all subscribed users:</h2>
+      <h2 className="text-2xl">Here's a list of all subscribed users:</h2>
       {allUsers.map((user) => {
         return (
           <div key={user._id}>

@@ -7,16 +7,18 @@ const Footer = () => {
   const { user } = useContext(AuthContext);
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white ">
       {!user ? (
-        <div className="md:flex md:flex-col md:justify-between md:items-center sm:px-12 px-4 bg-purple-900 py-7 gap-7">
+        <div className="flex flex-col bg-purple-900 items-center ">
           <div>
+            <br />
             <h1>
               Join over 10 billion people having fun while accomplishing their
               goals!
             </h1>
+            <br />
           </div>
-          <div>
+          <div className="">
             <a
               href="/"
               className="bg-purple-500 hover:bg-purple-600 duration-300 px-5 py-2.5 font-[Poppins]
@@ -25,6 +27,7 @@ const Footer = () => {
               Join Now!
             </a>
           </div>
+          <br />
         </div>
       ) : (
         <></>

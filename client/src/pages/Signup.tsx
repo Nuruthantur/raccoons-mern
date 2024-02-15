@@ -66,36 +66,41 @@ const Signup = () => {
   return (
     // "flex flex-col items-center justify-center h-screen"
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1>Sign up page goes here</h1>
       <div>
-        <div className="flex flex-col">
+        <h1 className="text-3xl">Sign up</h1>
+      </div>
+      <br />
+      <div className="flex flex-col  ">
+        <div className="flex flex-col items-center justify-center">
           <form
-            className="flex flex-col"
+            className="flex flex-col items-center"
             onSubmit={(e) => void handleSubmitRegister(e)}
           >
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              onChange={handleInputCredentialsChange}
-            />
-
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              onChange={handleInputCredentialsChange}
-            />
-
-            <button
-              className="bg-purple-800 hover:bg-purple-900 duration-300 px-5 py-2.5 font-[Poppins]
-           rounded-md text-white md:w-auto w-full"
-            >
+            <div>
+              <label htmlFor="email"></label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                onChange={handleInputCredentialsChange}
+              />
+            </div>
+            <br />
+            <div>
+              <label htmlFor="password"></label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                onChange={handleInputCredentialsChange}
+              />
+            </div>
+            <br />
+            <button className="bg-purple-800 hover:bg-purple-900 duration-300 px-5 py-2.5 font-[Poppins] rounded-md text-white md:w-auto w-full">
               Register
             </button>
           </form>
+          <br />
           <h3>Already a User? Sign in instead:</h3>
 
           <button
@@ -103,7 +108,7 @@ const Signup = () => {
            rounded-md text-white md:w-auto w-full"
             onClick={directUser}
           >
-            NAVIGATE
+            Go to login page!
           </button>
         </div>
       </div>

@@ -17,6 +17,7 @@ import LoginPage from "./pages/LoginPage.tsx";
 import Profile from "./pages/Profile.tsx";
 //styling
 import "./index.css";
+import TaskPage from "./pages/.TasksPageNew.tsx";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "/tasks",
         element: <TasksPage />,
+      },
+      {
+        path: "/task",
+        element: <TaskPage />,
       },
     ],
   },

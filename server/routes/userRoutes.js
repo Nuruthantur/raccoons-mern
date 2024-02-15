@@ -7,7 +7,7 @@ import {
   test,
   updateUser,
 } from "../controllers/userControllers.js";
-import { createNewTask } from "../controllers/taskControllers.js";
+import { createNewTask, deleteTask } from "../controllers/taskControllers.js";
 
 const userRouter = express.Router();
 
@@ -19,6 +19,6 @@ userRouter.post("/signup", signup);
 userRouter.post("/login", login);
 userRouter.post("/update/:id", updateUser);
 userRouter.post("/task/new", createNewTask);
-userRouter.post("/task/delete");
+userRouter.post("/task/delete/:id", deleteTask);
 
 export default userRouter;

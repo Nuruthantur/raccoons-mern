@@ -51,8 +51,15 @@ const createNewTask = async (req, res) => {
   }
 };
 
-// const deleteTask = async (req, res) => {
-//   const result = await TaskModel.findByIdAndDelete(req.params.id);
-// };
+const deleteTask = async (req, res) => {
+  const deletedTask = await TaskModel.findByIdAndDelete(req.params.id);
+  try {
+    res.status(201).json({ deletedTask });
+    console.log("Task deleted: ", deletedTask);
+  } catch (error) {
+    console.log("error deleting task", error);
+    res.status(500).json({ error: "server error deleting task" });
+  }
+};
 
-export { testing, getAllTasks, findTaskByName, createNewTask };
+export { testing, getAllTasks, findTaskByName, createNewTask, deleteTask };
