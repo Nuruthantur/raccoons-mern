@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useState } from "react";
+import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import { User } from "../@types/users";
 import baseUrl from "../utils/baseurl";
 
@@ -136,12 +136,12 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
           //handle not Ok response here
           console.log("response not ok", response);
           const result = await response.json();
-          console.log("result :>> ", result);
+          console.log("result ", result);
         }
 
         if (response.ok) {
           const result = (await response.json()) as LoginResponse;
-          console.log("result :>> ", result);
+          console.log("result ", result);
 
           if (result.data.token) {
             // Store token in local storage
@@ -156,6 +156,19 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       }
     }
   };
+
+  const checkUserStatus = () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      console.log("user is logged in");
+    } else {
+      console.log("No user");
+    }
+
+    //write a request to our backend to get the user information back when whe refresh
+  };
+
   const updateUser = async (values: {
     email: string;
     username: string | undefined;
@@ -188,8 +201,14 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const logout = () => {
+    localStorage.removeItem("token");
     setUser(null);
   };
+
+  useEffect(() => {
+    console.log("%c useEffect run", "color:orange");
+    checkUserStatus();
+  }, [user?.email]);
 
   return (
     <AuthContext.Provider
