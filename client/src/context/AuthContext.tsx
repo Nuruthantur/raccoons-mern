@@ -18,7 +18,7 @@ type LoginDataType = {
   token: string;
 };
 
-type LoginResponse = {
+export type LoginResponse = {
   message: string;
   error: boolean;
   data: LoginDataType;
@@ -131,9 +131,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
           `${baseUrl}/api/users/login`,
           requestOptions
         );
-
         if (!response.ok) {
-          //handle not Ok response here
           console.log("response not ok", response);
           const result = await response.json();
           console.log("result ", result);
@@ -146,7 +144,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
           if (result.data.token) {
             // Store token in local storage
             localStorage.setItem("token", result.data.token);
-
+            console.log("setting user");
             setUser(result.data.user);
           }
           //set our user information

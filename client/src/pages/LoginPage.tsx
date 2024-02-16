@@ -13,7 +13,7 @@ const LoginPage = () => {
     password: "",
   });
   // useState<LoginCredentials | null>(null);
-
+  const redirectTo = useNavigate();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log("event goes brrr :>>>", e.target.name, e.target.value);
     setLoginCredentials({
@@ -26,7 +26,7 @@ const LoginPage = () => {
   // const [passwordError, setPasswordError] = useState("");
   const { login } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
-  if (user) return <Navigate to={"/"} />;
+  // if (user) return <Navigate to={"/"} />;
 
   const navigate = useNavigate();
   const directUserToSignup = () => navigate("/sign-up");
@@ -35,6 +35,7 @@ const LoginPage = () => {
     e.preventDefault();
     console.log("handle login", loginCredentials);
     await login(loginCredentials?.email, loginCredentials?.password);
+    redirectTo("/");
   };
 
   return (
