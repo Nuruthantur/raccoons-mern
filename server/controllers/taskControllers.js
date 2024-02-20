@@ -41,6 +41,7 @@ const findTaskByName = async (req, res) => {
 };
 
 const createNewTask = async (req, res) => {
+  console.log(req.body);
   const newTask = await TaskModel.create(req.body);
   try {
     res.status(201).json({ newTask });
@@ -48,6 +49,23 @@ const createNewTask = async (req, res) => {
   } catch (error) {
     console.log("error", error);
     res.status(500).json({ error: "server error" });
+  }
+};
+
+const updateTask = async (req, res) => {
+  const { id } = req.params;
+  const valid = isValidObjectId(id);
+  console.log(valid);
+  if (!valid) return res.status(400).json({ error: "id invalid" });
+  try {
+    const updatedTask = await TaskModel.findBSyIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    if (!updatedTask) return res.status(404).json({ error: "User not found" });
+    res.status(200).json(updatedTask);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Something went wrong" });
   }
 };
 
@@ -62,4 +80,11 @@ const deleteTask = async (req, res) => {
   }
 };
 
-export { testing, getAllTasks, findTaskByName, createNewTask, deleteTask };
+export {
+  testing,
+  getAllTasks,
+  findTaskByName,
+  createNewTask,
+  updateTask,
+  deleteTask,
+};

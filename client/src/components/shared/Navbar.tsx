@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import "../index.css";
+import { AuthContext } from "../../context/AuthContext";
+import "../../index.css";
+import BackButton from "./BackButton";
 
 function NavBar() {
   const { user, logout } = useContext(AuthContext);
@@ -43,6 +44,22 @@ function NavBar() {
             </div>
             <div>
               <NavLink
+                to={"/todo"}
+                className={({ isActive }) => {
+                  return (
+                    "inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase    rounded-full" +
+                    (!isActive
+                      ? "text-black bg-violet-500 hover:text-white hover:bg-violet-600 transition duration-200 rounded-full"
+                      : " text-white bg-violet-600 underline")
+                  );
+                }}
+              >
+                Todo
+              </NavLink>
+            </div>
+
+            <div>
+              <NavLink
                 to={"/about"}
                 className={({ isActive }) => {
                   return (
@@ -68,7 +85,7 @@ function NavBar() {
                   );
                 }}
               >
-                Tasks
+                Tasklist
               </NavLink>
             </div>
 
@@ -84,23 +101,7 @@ function NavBar() {
                   );
                 }}
               >
-                Tasks
-              </NavLink>
-            </div>
-
-            <div>
-              <NavLink
-                to={"/sign-up"}
-                className={({ isActive }) => {
-                  return (
-                    "inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase    rounded-full" +
-                    (!isActive
-                      ? "text-black bg-violet-500 hover:text-white hover:bg-violet-600 transition duration-200 rounded-full"
-                      : " text-white bg-violet-600 underline")
-                  );
-                }}
-              >
-                Sign-Up
+                Tasks Page
               </NavLink>
             </div>
             <div>
@@ -122,7 +123,7 @@ function NavBar() {
             {!user ? (
               <div>
                 <NavLink
-                  to={"/auth"}
+                  to={"/sign-up"}
                   className={({ isActive }) => {
                     return (
                       "inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase    rounded-full" +
@@ -132,10 +133,25 @@ function NavBar() {
                     );
                   }}
                 >
-                  Authentication(old)
+                  Sign-Up
                 </NavLink>
               </div>
             ) : (
+              // <div>
+              //   <NavLink
+              //     to={"/sign-up"}
+              //     className={({ isActive }) => {
+              //       return (
+              //         "inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase    rounded-full" +
+              //         (!isActive
+              //           ? "text-black bg-violet-500 hover:text-white hover:bg-violet-600 transition duration-200 rounded-full"
+              //           : " text-white bg-violet-600 underline")
+              //       );
+              //     }}
+              //   >
+              //     Authentication(old)
+              //   </NavLink>
+              // </div>
               <>
                 <div>
                   <NavLink

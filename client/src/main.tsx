@@ -8,7 +8,7 @@ import { AuthContextProvider } from "./context/AuthContext.tsx";
 import Error404 from "./pages/Error404.tsx";
 import Layout from "./components/Layout.tsx";
 import Homepage from "./pages/Homepage.tsx";
-import AuthPage from "./pages/AuthPage.tsx";
+// import AuthPage from "./pages/AuthPage.tsx";
 import Users from "./pages/Users.tsx";
 import AboutPage from "./pages/AboutPage.tsx";
 import TasksPage from "./pages/TasksPage.tsx";
@@ -18,14 +18,17 @@ import Profile from "./pages/Profile.tsx";
 //styling
 import "./index.css";
 import TaskPage from "./pages/TasksPageNew.tsx";
+import { ThemeProvider } from "./context/themeContext.tsx";
 
 const router = createBrowserRouter([
   {
     element: (
       <AuthContextProvider>
-        <Layout>
-          <Outlet />
-        </Layout>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <Layout>
+            <Outlet />
+          </Layout>
+        </ThemeProvider>
       </AuthContextProvider>
     ),
     children: [
@@ -49,10 +52,10 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginPage />,
       },
-      {
-        path: "/auth",
-        element: <AuthPage />,
-      },
+      // {
+      //   path: "/auth",
+      //   element: <AuthPage />,
+      // },
       {
         path: "/profile",
         element: <Profile />,

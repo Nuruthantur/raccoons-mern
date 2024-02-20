@@ -1,7 +1,7 @@
 import React from "react";
-import NavBar from "./Navbar.tsx";
+import NavBar from "./shared/Navbar.tsx";
 import "../index.css";
-import Footer from "./footer/Footer.tsx";
+import Footer from "./shared/footer/Footer.tsx";
 
 type Props = {
   children: React.ReactNode;

@@ -15,7 +15,7 @@ const LoginPage = () => {
   // useState<LoginCredentials | null>(null);
   const redirectTo = useNavigate();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("event goes brrr :>>>", e.target.name, e.target.value);
+    console.log("event goes brrrr :P", e.target.name, e.target.value);
     setLoginCredentials({
       ...loginCredentials,
       [e.target.name]: e.target.value,
@@ -66,7 +66,7 @@ const LoginPage = () => {
               <input
                 name="password"
                 id="password"
-                type="text"
+                type="password"
                 placeholder="Enter your password here"
                 value={loginCredentials?.password}
                 onChange={handleInputChange}

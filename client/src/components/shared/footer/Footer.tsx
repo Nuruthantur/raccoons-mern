@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 import IconsContainer from "./IconsContainer";
 import ItemsContainer from "./ItemsContainer";
+import ScrollToTopButton from "../ScrollTopButton";
 
 const Footer = () => {
   const { user } = useContext(AuthContext);
@@ -43,6 +44,9 @@ const Footer = () => {
       <div className="">
         {/* flex justify-center  */}
         <IconsContainer />
+      </div>
+      <div>
+        <ScrollToTopButton />
       </div>
     </footer>
   );

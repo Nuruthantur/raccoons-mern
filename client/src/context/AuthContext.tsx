@@ -1,16 +1,28 @@
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import { User } from "../@types/users";
 import baseUrl from "../utils/baseurl";
+import { Navigate } from "react-router-dom";
+import { Task } from "../@types/tasks";
 
 interface AuthContextType {
   user: User | null;
+  task: Task | undefined;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   signup: (email: string, password: string) => Promise<void>;
   updateUser: (values: {
     email: string;
-    username: string | undefined;
+    userName?: string | undefined;
   }) => Promise<void>;
+
+  createATask: (values: {
+    name: string;
+    description: string;
+    userName?: string;
+  }) => Promise<void>;
+
+  updateUserWithTask: (userName: string, taskId: string) => Promise<void>;
+
   loading: boolean;
 }
 type LoginDataType = {
@@ -26,6 +38,7 @@ export type LoginResponse = {
 
 const defaultValue: AuthContextType = {
   user: null,
+  task: undefined,
   login: () => {
     throw new Error("no provider");
   },
@@ -38,6 +51,12 @@ const defaultValue: AuthContextType = {
   updateUser: () => {
     throw new Error("no provider");
   },
+  createATask: () => {
+    throw new Error("no provider");
+  },
+  updateUserWithTask: () => {
+    throw new Error("no provider");
+  },
   loading: false,
 };
 
@@ -46,6 +65,7 @@ export const AuthContext = createContext(defaultValue);
 export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
+  const [task, setTask] = useState<Task | undefined>(undefined);
 
   const signup = async (email: string, password: string) => {
     // check if a user with that email address already exists!
@@ -76,41 +96,12 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       console.log(error);
     }
   };
-  // OLD LOGIN FUNCTION
-  // const login = async (email: string, password: string) => {
-  //   const headers = new Headers();
-  //   headers.append("Content-Type", "application/x-www-form-urlencoded");
-  //   const body = new URLSearchParams();
-  //   body.append("email", email);
-  //   body.append("password", password);
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers,
-  //     body,
-  //   };
-  //   try {
-  //     const response = await fetch(
-  //       `${baseUrl}/api/users/login`,
-  //       requestOptions
-  //     );
-  //     if (response.ok) {
-  //       const result = (await response.json()) as User;
-  //       setUser(result);
-  //       console.log(result);
-  //     } else {
-  //       const result = (await response.json()) as ResNotOk;
-  //       console.log(result);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const login = async (email: string, password: string) => {
-    // if (!email || !password) {
-    //   alert("some fields are  missing");
-    //   return;
-    // }
+    if (!email || !password) {
+      alert("no field must be left empty");
+      return;
+    }
     //create the Request for our backend
     // if (email && password) {
     if (true) {
@@ -169,7 +160,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   const updateUser = async (values: {
     email: string;
-    username: string | undefined;
+    userName: string | undefined;
   }) => {
     //validation - check email format etc.
     if (!user) return;
@@ -201,10 +192,69 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
+    // Navigate({ to: "/login" });
   };
 
+  const createATask = async (values: {
+    name: string;
+    description: string;
+    userName?: string;
+  }) => {
+    const taskHeaders = new Headers();
+    taskHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    const body = JSON.stringify(values);
+
+    const requestOptions = {
+      method: "POST",
+      headers: taskHeaders,
+      body,
+    };
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/users/task/new`,
+        requestOptions
+      );
+      if (!response.ok) {
+        const result = (await response.json()) as ResNotOk;
+        console.log(result);
+      } else {
+        const result = (await response.json()) as Task;
+        console.log("the result :>> ", result);
+        setTask(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const updateUserWithTask = async (taskId: string, userName: string) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
+    const body = new URLSearchParams();
+    body.append("ID form task is ", taskId);
+    body.append("ID from user is ", userName);
+    var options = {
+      method: "PATCH",
+      headers,
+      body,
+    };
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/users/updateUserList`,
+        options
+      );
+      if (response.ok) {
+        const result = await response.json();
+        console.log("result :>> ", result);
+      } else {
+        const result = await response.json();
+        console.log(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    console.log("%c useEffect run", "color:orange");
+    console.log("useEffect run", "color:orange");
     checkUserStatus();
   }, [user?.email]);
 
@@ -212,6 +262,9 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     <AuthContext.Provider
       value={{
         user,
+        task,
+        createATask,
+        updateUserWithTask,
         login,
         logout,
         signup,

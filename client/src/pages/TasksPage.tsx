@@ -2,95 +2,164 @@ import { useEffect, useState } from "react";
 import { Task } from "../@types/tasks";
 import baseUrl from "../utils/baseurl";
 import AllTasksList from "../components/AllTasks";
+import TodoItem from "../components/ToDoItem";
+//styling
+// import "../styling/taskspage.css";
+
 type AllTasksResponse = {
   allTasks: Task[];
   number: number;
   status: string;
 };
-export default function TasksPage() {
-  const [allTasks, setAllTasks] = useState<Task[]>([]);
+// export default function TasksPage() {
+//   const [allTasks, setAllTasks] = useState<Task[]>([]);
+
+//   useEffect(() => {
+//     const fetchAllTasks = () => {
+//       fetch(`${baseUrl}/api/tasks/all-tasks`)
+//         .then((response) => response.json())
+//         .then((result: AllTasksResponse) => {
+//           const foundTasks = result.allTasks;
+//           // const numberOfTasks = result.number;
+//           console.log("result", result);
+//           setAllTasks(foundTasks);
+//           console.log(foundTasks);
+//         })
+//         .catch((e) => console.log(e));
+//     };
+//     fetchAllTasks();
+//   }, []);
+
+//   return (
+//     <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col justify-center  h-screen">
+//       <h1 className="font-bold text-xl mb-2">Here is a list of your tasks!</h1>
+//       {/* <AllTasksList /> */}
+//       <br />
+
+//       {allTasks?.map((task) => {
+//         return (
+//           <div
+//             className="mx-auto text-center  mt-auto mb-auto flex flex-col justify-center"
+//             key={task._id}
+//           >
+//             <div className="max-w-sm rounded overflow-hidden shadow-lg">
+//               <div className="px-6 py-4">
+//                 <div className="font-bold text-xl mb-2">{task.taskName}</div>
+//                 <br />
+//                 <p className="text-gray-700 text-base">{task.description}</p>
+//               </div>
+//             </div>
+//           </div>
+//         );
+//       })}
+//     </div>
+//   );
+
+// }
+
+// function TasksPage() {
+//   const [items, setItems] = useState([]);
+//   const [input, setInput] = useState("");
+
+//   useEffect(() => {
+//     GetTodos();
+//   }, []);
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setInput(e.target.value);
+//   };
+
+//   const GetTodos = () => {
+//     fetch(`${baseUrl}/api/tasks/all-tasks`)
+//       .then((res) => res.json())
+//       .then((data) => setItems(data))
+//       .catch((err) => console.log(err));
+//   };
+
+//   const addItem = async () => {
+//     const data = await fetch(`${baseUrl}/api/users/task/new`, {
+//       method: "POST",
+//       headers: {
+//         "content-type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         name: input,
+//         completed: false,
+//       }),
+//     }).then((res) => res.json());
+//     console.log(data);
+//     await GetTodos();
+//     setInput("");
+//   };
+
+//   return (
+//     <div className="container">
+//       <div className="heading">
+//         <h1>TO-DO-APP</h1>
+//       </div>
+
+//       <div className="form">
+//         <input type="text" value={input} onChange={handleChange}></input>
+//         <button onClick={() => addItem()}>
+//           <span>ADD</span>
+//         </button>
+//       </div>
+
+//       <div className="todolist">
+//         {items.map((item) => {
+//           const { _id, name, completed } = item;
+//           return (
+//             <TodoItem
+//               name={name}
+//               id={_id}
+//               completed={completed}
+//               setItems={setItems}
+//             />
+//           );
+//         })}
+//       </div>
+//     </div>
+//   );
+// }
+
+//Option 2:
+function TasksPage() {
+  const [items, setItems] = useState([]);
+  const [input, setInput] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+    console.log("input: ", e.target.value);
+  };
 
   useEffect(() => {
-    const fetchAllTasks = () => {
-      fetch(`${baseUrl}/api/tasks/all-tasks`)
-        .then((response) => response.json())
-        .then((result: AllTasksResponse) => {
-          const foundTasks = result.allTasks;
-          // const numberOfTasks = result.number;
-          console.log("result", result);
-          setAllTasks(foundTasks);
-          console.log(foundTasks);
-        })
-        .catch((e) => console.log(e));
-    };
-    fetchAllTasks();
+    GetTodos();
   }, []);
-
+  const GetTodos = () => {
+    fetch(`${baseUrl}/api/tasks/all-tasks`)
+      .then((res) => res.json())
+      .then((data) => setItems(data))
+      .catch((err) => console.log(err));
+  };
   return (
-    <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col justify-center  h-screen">
-      <h1 className="font-bold text-xl mb-2">Here is a list of your tasks!</h1>
-      {/* <AllTasksList /> */}
-      <br />
+    <div className="container">
+      <div className="heading">
+        <h1>TO-DO-APP</h1>
+      </div>
 
-      {allTasks?.map((task) => {
-        return (
-          <div
-            className="mx-auto text-center  mt-auto mb-auto flex flex-col justify-center"
-            key={task._id}
-          >
-            <div className="max-w-sm rounded overflow-hidden shadow-lg">
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">{task.taskName}</div>
-                <br />
-                <p className="text-gray-700 text-base">{task.description}</p>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      <div className="form">
+        <input type="text" value={input} onChange={handleChange}></input>
+        <button>
+          <span>ADD</span>
+        </button>
+      </div>
+
+      <div className="todolist">
+        <TodoItem />
+      </div>
+      <div>{/* <AllTasksList /> */}</div>
     </div>
   );
-
-  //     {/* <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
-  //       <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
-  //         <div className="mb-4">
-  //           <h1 className="text-grey-darkest">Todo List</h1>{" "}
-  //           <div className="flex mt-4">
-  //             <input
-  //               className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
-  //               placeholder="Add Todo"
-  //             />
-  //             <button className="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal">
-  //               Add
-  //             </button>
-  //           </div>
-  //         </div>
-  //         <div>
-  //           <div className="flex mb-4 items-center">
-  //             <p className="w-full text-grey-darkest">
-  //               Add another component to Tailwind Components
-  //             </p>
-  //             <button className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green border-green hover:bg-green">
-  //               Done
-  //             </button>
-  //             <button className="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">
-  //               Remove
-  //             </button>
-  //           </div>
-  //           <div className="flex mb-4 items-center">
-  //             <p className="w-full line-through text-green">
-  //               Submit Todo App Component to Tailwind Components
-  //             </p>
-  //             <button className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-grey border-grey hover:bg-grey">
-  //               Not Done
-  //             </button>
-  //             <button className="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">
-  //               Remove
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div> */}
-  //   </div>
-  // );
 }
+
+export default TasksPage;
