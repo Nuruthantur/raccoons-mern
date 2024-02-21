@@ -35,6 +35,7 @@ const LoginPage = () => {
     e.preventDefault();
     console.log("handle login", loginCredentials);
     await login(loginCredentials?.email, loginCredentials?.password);
+    // do this only if the login is successful! otherwise you'd get redirected even after a failed login
     redirectTo("/");
   };
 
@@ -45,7 +46,6 @@ const LoginPage = () => {
           <h1 className="text-3xl">Login</h1>
           <br />
         </div>
-
         <div>
           <form onSubmit={(e) => void handleSubmitLogin(e)}>
             <div className={"inputContainer"}>

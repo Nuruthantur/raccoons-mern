@@ -135,7 +135,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
           if (result.data.token) {
             // Store token in local storage
             localStorage.setItem("token", result.data.token);
-            console.log("setting user");
+            console.log("result login", result);
             setUser(result.data.user);
           }
           //set our user information

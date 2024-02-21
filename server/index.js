@@ -2,9 +2,11 @@ import express from "express";
 import colors from "colors";
 import cors from "cors";
 import "dotenv/config";
+import mongoose from "mongoose";
+import passport from "passport";
 import userRouter from "./routes/userRoutes.js";
 import taskRouter from "./routes/taskRoutes.js";
-import mongoose from "mongoose";
+import jwtStrategy from "./config/passportConfig.js";
 
 const app = express();
 
@@ -16,6 +18,8 @@ const addMiddlewares = () => {
     })
   );
   app.use(cors());
+  app.use(passport.initialize());
+  passport.use(jwtStrategy);
 };
 
 const addRoutes = () => {

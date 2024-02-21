@@ -68,8 +68,9 @@ const Signup = () => {
     <div className="flex flex-col items-center justify-center h-screen">
       <div>
         <h1 className="text-3xl">Sign up</h1>
+        <br />
       </div>
-      <br />
+
       <div className="flex flex-col  ">
         <div className="flex flex-col items-center justify-center">
           <form

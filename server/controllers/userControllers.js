@@ -169,6 +169,7 @@ const login = async (req, res) => {
           const user = {
             username: existingUser.username,
             email: existingUser.email,
+            taskList: existingUser.tasklist,
           };
           res.status(200).json({
             message: "user logged in",
@@ -208,4 +209,39 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { test, getAllUsers, findUserByEmail, signup, login, updateUser };
+const getProfile = async (req, res) => {
+  // console.log("profile from user");
+
+  console.log("req: ", req.user);
+  const { user } = req;
+  if (!user) {
+    res.status(500).json({
+      message: "you need to login first",
+      error: true,
+      data: null,
+    });
+  }
+  if (user) {
+    res.status(200).json({
+      message: "request successful",
+      error: false,
+      data: {
+        user: {
+          // username: user.username,
+          email: user.email,
+          //TODO - userImage: user.userImage,
+        },
+      },
+    });
+  }
+};
+
+export {
+  test,
+  getAllUsers,
+  findUserByEmail,
+  signup,
+  login,
+  updateUser,
+  getProfile,
+};

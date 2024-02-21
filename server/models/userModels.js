@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
     // _id: Schema.Types.ObjectId,
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    username: { type: String, required: false },
+    username: { type: String, required: false, unique: true },
     tasklist: [
       { type: mongoose.Schema.Types.ObjectId, ref: "task", required: false },
     ],

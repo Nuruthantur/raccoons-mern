@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import baseUrl from "../utils/baseurl";
 import TodoItem from "../components/ToDoItem";
 import AllTasksList from "../components/AllTasks";
@@ -6,6 +6,7 @@ import { Task } from "../@types/tasks";
 import TasksPage from "./TasksPage";
 import { Button } from "../components/ui/button";
 import { User } from "../@types/users";
+import { AuthContext } from "../context/AuthContext";
 type AllTasksResponse = {
   allTasks: Task[];
   number: number;
@@ -17,10 +18,16 @@ type TaskResponse = {
   data: Task;
 };
 
+type NewTaskType = {
+  taskName: string;
+  description: string;
+};
 function TaskPage() {
+  const { user } = useContext(AuthContext);
   const [items, setItems] = useState([]);
   const [input, setInput] = useState("");
   const [allTasks, setAllTasks] = useState<Task[]>([]);
+  const [newTask, setNewTask] = useState<NewTaskType>({} as NewTaskType);
 
   useEffect(() => {
     const fetchAllTasks = () => {
@@ -68,20 +75,22 @@ function TaskPage() {
   //   setInput("");
   // };
 
-  const addItem2 = async (taskName: string, difficulty: string) => {
+  const addItem2 = async (newTaskInputs: NewTaskType) => {
     //create the Request for our backend
-    // if (!taskName) {
-    //   alert("Task must have a name");
-    //   return;
-    // }
-    const [user] = useState<User>();
+    //REVIEW create logic to check existing fields before submit
+
+    if (!newTaskInputs.taskName) {
+      alert("Task must have a name");
+      return;
+    }
+
     if (true) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
       const urlencoded = new URLSearchParams();
-      urlencoded.append("taskName -->", taskName);
-      // urlencoded.append("difficulty -->", difficulty);
+      urlencoded.append("taskName", newTaskInputs.taskName);
+      urlencoded.append("description", newTaskInputs.description);
 
       const requestOptions = {
         method: "POST",
@@ -109,15 +118,21 @@ function TaskPage() {
     }
   };
   //change the div to a form and create a form submit button (don't forget the e: prevent default or it will trigger a reload of the page)
+  const [open, setOpen] = useState(false);
 
+  const handleOpen = () => {
+    setOpen(!open);
+  };
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("formsubmit has run", e);
+    console.log("newTask :>> ", newTask);
+    addItem2(newTask);
+    // console.log("formsubmit has run", e);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // e.preventDefault();
     console.log("handleInputChange runs", e.target.name, e.target.value);
+    setNewTask({ ...newTask, [e.target.name]: e.target.value });
   };
 
   return (
@@ -128,31 +143,39 @@ function TaskPage() {
       <form onSubmit={(e) => void handleFormSubmit(e)}>
         <div className="form">
           <input
-            name="email"
-            id="taskname"
+            name="taskName"
+            id="taskName"
             type="text"
             placeholder="Enter a task name"
             onChange={handleInputChange}
             className={"inputBox"}
-            value={input}
+            value={newTask.taskName}
           ></input>
           <input
-            name="email"
+            name="description"
             id="description"
             type="text"
             placeholder="Enter a description "
             onChange={handleInputChange}
             className={"inputBox"}
-            value={input}
+            value={newTask.description}
           />
+          {/* 
+
+*/}
+          <div>
+            <button onClick={handleOpen}>Dropdown</button>
+            {open ? <div>Is Open</div> : <div>Is Closed</div>}
+          </div>
+
           <button
             className="bg-purple-800 hover:bg-purple-900 duration-300 py-2 px-4  sm:w-50 md:w-56 lg:w-64 font-[Poppins]
            rounded-md text-white"
-            onClick={(e) => console.log(" add task button clicked", e)}
+            // onClick={() => console.log(" add task button clicked")}
           >
             {/* onClick={() => addItem2()} */}
             {/* onClick={(e) => console.log(" add task button clicked", e)} */}
-            <span>add task</span>
+            add task
           </button>
         </div>
       </form>
@@ -165,22 +188,27 @@ function TaskPage() {
         {/* <AllTasksList /> */}
         <br />
 
-        {allTasks?.map((task) => {
-          return (
-            <div
-              className="mx-auto text-center  mt-auto mb-auto flex flex-col justify-center"
-              key={task._id}
-            >
-              <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                <div className="px-6 py-4">
-                  <div className="font-bold text-xl mb-2">{task.taskName}</div>
-                  <br />
-                  <p className="text-gray-700 text-base">{task.description}</p>
+        {user &&
+          user.taskList.map((task) => {
+            return (
+              <div
+                className="mx-auto text-center  mt-auto mb-auto flex flex-col justify-center"
+                key={task._id}
+              >
+                <div className="max-w-sm rounded overflow-hidden shadow-lg">
+                  <div className="px-6 py-4">
+                    <div className="font-bold text-xl mb-2">
+                      {task.taskName}
+                    </div>
+                    <br />
+                    <p className="text-gray-700 text-base">
+                      {task.description}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
       {/* <div className="todolist">
         {items.map((item) => {

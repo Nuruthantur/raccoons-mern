@@ -40,8 +40,16 @@ const findTaskByName = async (req, res) => {
   }
 };
 
+const findTaskById = async (req, res) => {
+  try {
+  } catch (error) {}
+};
+
 const createNewTask = async (req, res) => {
   console.log(req.body);
+  console.log(req.user);
+  //build logic to check required fields coming in the request
+
   const newTask = await TaskModel.create(req.body);
   try {
     res.status(201).json({ newTask });
@@ -49,6 +57,16 @@ const createNewTask = async (req, res) => {
   } catch (error) {
     console.log("error", error);
     res.status(500).json({ error: "server error" });
+  }
+  //REVIEW create a mongoose request to add the task id to the user object
+
+  // if(newTask){
+  //   const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {taskList:newTask._id})
+  // }
+  if (newTask) {
+    const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {
+      $push: { taskList: newTask._id },
+    });
   }
 };
 
