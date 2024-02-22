@@ -10,7 +10,7 @@ const Profile = () => {
 
   console.log("username", username);
   const handleSubmit = async () => {
-    await updateUser({ email, username });
+    await updateUser({ email });
   };
   if (user)
     return (

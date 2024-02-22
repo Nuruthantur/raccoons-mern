@@ -19,6 +19,7 @@ import Profile from "./pages/Profile.tsx";
 import "./index.css";
 import TaskPage from "./pages/TasksPageNew.tsx";
 import { ThemeProvider } from "./context/themeContext.tsx";
+import Profile2 from "./pages/Profile2.tsx";
 
 const router = createBrowserRouter([
   {
@@ -58,7 +59,7 @@ const router = createBrowserRouter([
       // },
       {
         path: "/profile",
-        element: <Profile />,
+        element: <Profile2 />,
       },
       {
         path: "/tasks",

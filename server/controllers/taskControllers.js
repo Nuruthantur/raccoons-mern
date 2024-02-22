@@ -63,11 +63,11 @@ const createNewTask = async (req, res) => {
   // if(newTask){
   //   const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {taskList:newTask._id})
   // }
-  if (newTask) {
-    const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {
-      $push: { taskList: newTask._id },
-    });
-  }
+  // if (newTask) {
+  //   const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {
+  //     $push: { taskList: newTask._id },
+  //   });
+  // }
 };
 
 const updateTask = async (req, res) => {

@@ -212,7 +212,7 @@ const updateUser = async (req, res) => {
 const getProfile = async (req, res) => {
   // console.log("profile from user");
 
-  console.log("req: ", req.user);
+  // console.log("req: ", req.user);
   const { user } = req;
   if (!user) {
     res.status(500).json({

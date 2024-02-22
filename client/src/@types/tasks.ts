@@ -6,4 +6,7 @@ export interface Task {
   text: string;
   completed: boolean;
   createdAt: Date;
+  difficulty: difficulty;
 }
+
+type difficulty = "easy" | "medium" | "hard";

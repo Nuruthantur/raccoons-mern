@@ -23,11 +23,21 @@ interface AuthContextType {
 
   updateUserWithTask: (userName: string, taskId: string) => Promise<void>;
 
+  // getProfile: (values: { user: User }) => void;
+  getProfile: (user: User) => Promise<void>;
+
   loading: boolean;
 }
+
 type LoginDataType = {
   user: User;
   token: string;
+};
+
+type APIResponse<T> = {
+  message: string;
+  error: boolean;
+  data: T;
 };
 
 export type LoginResponse = {
@@ -55,6 +65,9 @@ const defaultValue: AuthContextType = {
     throw new Error("no provider");
   },
   updateUserWithTask: () => {
+    throw new Error("no provider");
+  },
+  getProfile: () => {
     throw new Error("no provider");
   },
   loading: false,
@@ -103,8 +116,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       return;
     }
     //create the Request for our backend
-    // if (email && password) {
-    if (true) {
+    if (email && password) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -190,7 +202,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
     setUser(null);
     // Navigate({ to: "/login" });
   };
@@ -226,6 +238,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       console.log(error);
     }
   };
+
   const updateUserWithTask = async (taskId: string, userName: string) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -253,6 +266,40 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       console.log(error);
     }
   };
+
+  //TODO - move the getProfile function here
+  // do a user token check in the authcontext to have the token every time the page refreshes
+  const getProfile = async () => {
+    const [userProfile, setUserProfile] = useState<User>({} as User);
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("you have to login first");
+    }
+    if (token) {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+      };
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/users/profile",
+          requestOptions
+        );
+        if (response.ok) {
+          const result = (await response.json()) as APIResponse<User>;
+          console.log("result", result);
+          setUserProfile(result.data.user);
+        }
+      } catch (error) {
+        console.log("error ", error);
+      }
+    }
+  };
+  // in the useeffect check for the token
   useEffect(() => {
     console.log("useEffect run", "color:orange");
     checkUserStatus();
@@ -269,6 +316,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         logout,
         signup,
         updateUser,
+        getProfile,
         loading,
       }}
     >

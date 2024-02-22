@@ -22,6 +22,23 @@ type NewTaskType = {
   taskName: string;
   description: string;
 };
+
+export interface IDropdownOption {
+  label: string | number;
+  labelValue: string | number;
+}
+
+interface IDropdownProps {
+  name?: string;
+  options: IDropdownOption[];
+  required?: boolean;
+  tabIndex?: number;
+  className?: string;
+  type?: string;
+  placeHolder?: string;
+  labelName?: string;
+}
+
 function TaskPage() {
   const { user } = useContext(AuthContext);
   const [items, setItems] = useState([]);
@@ -120,65 +137,79 @@ function TaskPage() {
   //change the div to a form and create a form submit button (don't forget the e: prevent default or it will trigger a reload of the page)
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log(e);
     setOpen(!open);
   };
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("newTask :>> ", newTask);
     addItem2(newTask);
-    // console.log("formsubmit has run", e);
+    // console.log("form submit has run", e);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log("handleInputChange runs", e.target.name, e.target.value);
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
   };
-
+  //TODO - create a dropdown menu to choose the difficulty level for a task
   return (
-    <div className="flex flex-col justify-center ">
-      <div className="heading flex flex-col justify-center">
-        <h1>Create a new task</h1>
-      </div>
-      <form onSubmit={(e) => void handleFormSubmit(e)}>
-        <div className="form">
-          <input
-            name="taskName"
-            id="taskName"
-            type="text"
-            placeholder="Enter a task name"
-            onChange={handleInputChange}
-            className={"inputBox"}
-            value={newTask.taskName}
-          ></input>
-          <input
-            name="description"
-            id="description"
-            type="text"
-            placeholder="Enter a description "
-            onChange={handleInputChange}
-            className={"inputBox"}
-            value={newTask.description}
-          />
-          {/* 
-
-*/}
-          <div>
-            <button onClick={handleOpen}>Dropdown</button>
-            {open ? <div>Is Open</div> : <div>Is Closed</div>}
-          </div>
-
-          <button
-            className="bg-purple-800 hover:bg-purple-900 duration-300 py-2 px-4  sm:w-50 md:w-56 lg:w-64 font-[Poppins]
-           rounded-md text-white"
-            // onClick={() => console.log(" add task button clicked")}
-          >
-            {/* onClick={() => addItem2()} */}
-            {/* onClick={(e) => console.log(" add task button clicked", e)} */}
-            add task
-          </button>
+    <>
+      <div className="flex flex-col justify-center items-center">
+        <div className="heading flex flex-col justify-center">
+          <h1>Create a new task</h1>
+          <br />
         </div>
-      </form>
+        <form onSubmit={(e) => void handleFormSubmit(e)}>
+          <div className="form">
+            <div>
+              <input
+                name="taskName"
+                id="taskName"
+                type="text"
+                placeholder="Enter a task name"
+                onChange={handleInputChange}
+                className={"inputBox"}
+                value={newTask.taskName}
+              ></input>
+            </div>
+            <br />
+
+            <div>
+              <input
+                name="description"
+                id="description"
+                type="text"
+                placeholder="Enter a description "
+                onChange={handleInputChange}
+                className={"inputBox"}
+                value={newTask.description}
+              />
+            </div>
+            <div>
+              <button onClick={handleOpen}>Difficulty</button>
+              {open ? (
+                <div>
+                  <ul>
+                    <li>1{user && user._id}</li>
+                    <li>2</li>
+                    <li>3</li>
+                  </ul>
+                </div>
+              ) : (
+                <div>Is Closed</div>
+              )}
+            </div>
+
+            <button
+              className="bg-purple-800 hover:bg-purple-900 duration-300 py-2 px-4  sm:w-50 md:w-56 lg:w-64 font-[Poppins]
+           rounded-md text-white"
+            >
+              add task
+            </button>
+          </div>
+        </form>
+      </div>
 
       {/* get the users tasks and not all tasks! */}
       <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col justify-center  h-screen">
@@ -223,7 +254,7 @@ function TaskPage() {
           );
         })}
       </div> */}
-    </div>
+    </>
   );
 }
 

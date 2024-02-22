@@ -40,67 +40,72 @@ const LoginPage = () => {
   };
 
   return (
-    <>
-      <div className={"flex flex-col items-center justify-center h-screen"}>
-        <div className={"titleContainer"}>
+    <div>
+      <div className="flex flex-col items-center justify-center h-screen shadow-lg">
+        {/* flex flex-col items-center justify-center h-screen shadow-lg>
+         */}
+        <div>
           <h1 className="text-3xl">Login</h1>
           <br />
         </div>
-        <div>
-          <form onSubmit={(e) => void handleSubmitLogin(e)}>
-            <div className={"inputContainer"}>
-              <input
-                name="email"
-                id="email"
-                type="text"
-                placeholder="Enter your email here"
-                value={loginCredentials?.email}
-                onChange={handleInputChange}
-                className={"inputBox"}
-              />
-              <label htmlFor="email"></label>
-              {/* <label className="errorLabel">{emailError}</label> */}
-            </div>
-            <br />
-            <div className={"inputContainer"}>
-              <input
-                name="password"
-                id="password"
-                type="password"
-                placeholder="Enter your password here"
-                value={loginCredentials?.password}
-                onChange={handleInputChange}
-                className={"inputBox"}
-              />
-              <label htmlFor="password"></label>
-              {/* <label className="errorLabel">{passwordError}</label> */}
-            </div>
-            <br />
-            <div className={"inputContainer"}>
-              <button
-                className={
-                  "bg-purple-800 hover:bg-purple-900 duration-300 px-5 py-2.5 font-[Poppins] rounded-md text-white md:w-auto w-full"
-                }
-                type="submit"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
 
-        <div>
-          <h3>Already a User? Sign in instead:</h3>
-          <button
-            className="bg-purple-800 hover:bg-purple-900 duration-300 px-5 py-2.5 font-[Poppins]
+        <div className="flex flex-col">
+          <div className="flex flex-col items-center justify-center">
+            <form
+              className="flex flex-col items-center"
+              onSubmit={(e) => void handleSubmitLogin(e)}
+            >
+              <div className={"inputContainer"}>
+                <label htmlFor="email"></label>
+                <input
+                  name="email"
+                  id="email"
+                  type="text"
+                  placeholder="Enter your email here"
+                  value={loginCredentials?.email}
+                  onChange={handleInputChange}
+                  className={"inputBox"}
+                />
+                {/* <label className="errorLabel">{emailError}</label> */}
+              </div>
+              <br />
+              <div className={"inputContainer"}>
+                <input
+                  name="password"
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password here"
+                  value={loginCredentials?.password}
+                  onChange={handleInputChange}
+                  className={"inputBox"}
+                />
+                <label htmlFor="password"></label>
+              </div>
+              <br />
+              <div>
+                <button
+                  className={
+                    "bg-purple-800 hover:bg-purple-900 duration-300 px-5 py-2.5 font-[Poppins] rounded-md text-white md:w-auto w-full"
+                  }
+                  type="submit"
+                >
+                  Login
+                </button>
+              </div>
+            </form>
+            <br />
+            <h3>Already a User? Sign in instead:</h3>
+            <button
+              className="bg-purple-800 hover:bg-purple-900 duration-300 px-5 py-2.5 font-[Poppins]
            rounded-md text-white md:w-auto w-full"
-            onClick={directUserToSignup}
-          >
-            NAVIGATE
-          </button>
+              onClick={directUserToSignup}
+            >
+              NAVIGATE
+            </button>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

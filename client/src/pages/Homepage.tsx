@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import useVisibility from "../hooks/visibilityHook";
 import "../index.css";
+import { AuthContext } from "../context/AuthContext";
 
 const Homepage = () => {
+  const { user } = useContext(AuthContext);
   const [dialogVisibility, handleDialogVisiblity] = useVisibility(false);
   return (
     <div className="flex justify-items h-screen  gap-3">
@@ -10,7 +13,7 @@ const Homepage = () => {
         <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col justify-center items-center sm:w-3/4 gap-4">
           <div>
             <h1 className="text-3xl font-bold underline mt-auto mb-4">
-              This is the homepage
+              This is the homepage welcome {user?.email}
             </h1>
           </div>
           <div>
