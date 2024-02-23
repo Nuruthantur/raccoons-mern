@@ -22,7 +22,7 @@ userRouter.get("/profile", jwtAuth, getProfile);
 userRouter.post("/signup", signup);
 userRouter.post("/login", login);
 userRouter.post("/update/:id", updateUser);
-userRouter.post("/task/new", createNewTask);
+// userRouter.post("/task/new", createNewTask);
 userRouter.post("/task/delete/:id", deleteTask);
 
 export default userRouter;

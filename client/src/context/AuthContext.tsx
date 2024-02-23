@@ -24,8 +24,7 @@ interface AuthContextType {
   updateUserWithTask: (userName: string, taskId: string) => Promise<void>;
 
   // getProfile: (values: { user: User }) => void;
-  getProfile: (user: User) => Promise<void>;
-
+  getProfile: (email: string, username: string) => Promise<void>;
   loading: boolean;
 }
 
@@ -79,6 +78,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
   const [task, setTask] = useState<Task | undefined>(undefined);
+  console.log("USER", user);
 
   const signup = async (email: string, password: string) => {
     // check if a user with that email address already exists!
@@ -139,11 +139,9 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
           const result = await response.json();
           console.log("result ", result);
         }
-
         if (response.ok) {
           const result = (await response.json()) as LoginResponse;
           console.log("result ", result);
-
           if (result.data.token) {
             // Store token in local storage
             localStorage.setItem("token", result.data.token);
@@ -202,9 +200,9 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const logout = () => {
-    // localStorage.removeItem("token");
+    localStorage.removeItem("token");
     setUser(null);
-    // Navigate({ to: "/login" });
+    Navigate({ to: "/login" });
   };
 
   const createATask = async (values: {
@@ -270,7 +268,8 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   //TODO - move the getProfile function here
   // do a user token check in the authcontext to have the token every time the page refreshes
   const getProfile = async () => {
-    const [userProfile, setUserProfile] = useState<User>({} as User);
+    // const [userProfile, setUserProfile] = useState<User[] | null>(null);
+    // ({} as User[]);
 
     const token = localStorage.getItem("token");
     if (!token) {
@@ -290,20 +289,26 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
           requestOptions
         );
         if (response.ok) {
-          const result = (await response.json()) as APIResponse<User>;
-          console.log("result", result);
-          setUserProfile(result.data.user);
+          const result = (await response.json()) as LoginResponse;
+          // APIResponse<User>;
+          console.log("result for getProfile", result);
+          setUser(result.data.user);
         }
       } catch (error) {
         console.log("error ", error);
       }
     }
   };
+
   // in the useeffect check for the token
   useEffect(() => {
     console.log("useEffect run", "color:orange");
     checkUserStatus();
   }, [user?.email]);
+
+  useEffect(() => {
+    getProfile().catch((e) => console.log(e));
+  }, []);
 
   return (
     <AuthContext.Provider

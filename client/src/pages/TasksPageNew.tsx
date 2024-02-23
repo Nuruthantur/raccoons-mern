@@ -7,6 +7,8 @@ import TasksPage from "./TasksPage";
 import { Button } from "../components/ui/button";
 import { User } from "../@types/users";
 import { AuthContext } from "../context/AuthContext";
+import DropdownComponent1 from "../components/DropdownComponent";
+import Dropdown from "../components/Dropdown";
 type AllTasksResponse = {
   allTasks: Task[];
   number: number;
@@ -46,6 +48,12 @@ function TaskPage() {
   const [allTasks, setAllTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<NewTaskType>({} as NewTaskType);
 
+  const [difficulty, setDifficulty] = useState<"easy" | "medium" | "hard">(
+    "easy"
+  );
+  const handleChange = (newDifficulty: "easy" | "medium" | "hard") => {
+    setDifficulty(newDifficulty);
+  };
   useEffect(() => {
     const fetchAllTasks = () => {
       fetch(`${baseUrl}/api/tasks/all-tasks`)
@@ -62,36 +70,6 @@ function TaskPage() {
     fetchAllTasks();
   }, []);
 
-  // const addItem = async () => {
-  //   // const myHeaders = new Headers();
-  //   // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  //   // const urlencoded = new URLSearchParams();
-  //   // urlencoded.append("taskName", "");
-  //   // urlencoded.append("difficulty", "");
-  //   const data = await fetch(`${baseUrl}/api/users/task/new`, {
-  //     // const urlencoded = new URLSearchParams();
-  //     // urlencoded.append("taskName", "go for a walk");
-  //     // urlencoded.append("difficulty", "easy");
-  //     // const requestOptions = {
-  //     //   method: "POST",
-  //     //   headers: myHeaders,
-  //     //   body: urlencoded,
-  //     //   redirect: "follow"
-  //     // };
-  //     method: "POST",
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       name: input,
-  //       // completed: false,
-  //     }),
-  //   }).then((result) => result.json());
-  //   console.log(data);
-  //   // GetTodos();
-  //   setInput("");
-  // };
-
   const addItem2 = async (newTaskInputs: NewTaskType) => {
     //create the Request for our backend
     //REVIEW create logic to check existing fields before submit
@@ -100,9 +78,13 @@ function TaskPage() {
       alert("Task must have a name");
       return;
     }
-
-    if (true) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("you have to login first");
+    }
+    if (token) {
       const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
       const urlencoded = new URLSearchParams();
@@ -116,7 +98,7 @@ function TaskPage() {
       };
       try {
         const response = await fetch(
-          `${baseUrl}/api/users/task/new`,
+          `${baseUrl}/api/tasks/task/new`,
           requestOptions
         );
         if (!response.ok) {
@@ -134,7 +116,7 @@ function TaskPage() {
       }
     }
   };
-  //change the div to a form and create a form submit button (don't forget the e: prevent default or it will trigger a reload of the page)
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -155,7 +137,7 @@ function TaskPage() {
   //TODO - create a dropdown menu to choose the difficulty level for a task
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center ">
         <div className="heading flex flex-col justify-center">
           <h1>Create a new task</h1>
           <br />
@@ -209,6 +191,17 @@ function TaskPage() {
             </button>
           </div>
         </form>
+        <div>
+          {/* //FIXME - */}
+          <Dropdown
+            selectedValue={difficulty}
+            onChange={handleChange}
+            label="Choose Difficulty"
+          />
+          {difficulty === "easy" && <p>You chose Easy!</p>}
+          {difficulty === "medium" && <p>You chose Medium!</p>}
+          {difficulty === "hard" && <p>You chose Hard!</p>}
+        </div>
       </div>
 
       {/* get the users tasks and not all tasks! */}
@@ -219,7 +212,7 @@ function TaskPage() {
         {/* <AllTasksList /> */}
         <br />
 
-        {user &&
+        {/* {user &&
           user.taskList.map((task) => {
             return (
               <div
@@ -239,7 +232,7 @@ function TaskPage() {
                 </div>
               </div>
             );
-          })}
+          })} */}
       </div>
       {/* <div className="todolist">
         {items.map((item) => {

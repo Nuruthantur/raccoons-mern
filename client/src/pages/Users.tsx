@@ -3,7 +3,7 @@ import { User } from "../@types/users";
 import baseUrl from "../utils/baseurl";
 import FindOneUser from "../components/FindAUser";
 
-function App() {
+function Users() {
   const [allUsers, setAllUsers] = useState<User[]>([]);
 
   useEffect(() => {
@@ -36,4 +36,4 @@ function App() {
   );
 }
 
-export default App;
+export default Users;

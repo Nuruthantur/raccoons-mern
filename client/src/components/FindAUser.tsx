@@ -76,6 +76,7 @@ const FindOneUser = () => {
                   Found this user:
                 </h2>
                 <p>{foundUser.email}</p>
+                {/* //TODO - also display this users tasks here! */}
               </div>
             )}
           </div>

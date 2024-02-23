@@ -1,4 +1,5 @@
 import TaskModel from "../models/taskModels.js";
+import UserModel from "../models/userModels.js";
 
 const testing = (req, res) => {
   console.log("here could be your testing");
@@ -46,12 +47,18 @@ const findTaskById = async (req, res) => {
 };
 
 const createNewTask = async (req, res) => {
-  console.log(req.body);
-  console.log(req.user);
+  console.log("req.body", req.body);
+  console.log("req.user", req.user);
   //build logic to check required fields coming in the request
 
-  const newTask = await TaskModel.create(req.body);
   try {
+    const newTask = await TaskModel.create(req.body);
+    console.log(newTask);
+    console.log(req.user);
+    const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {
+      $push: { tasklist: newTask._id },
+    });
+    console.log(addTaskToUser);
     res.status(201).json({ newTask });
     console.log(newTask);
   } catch (error) {
@@ -64,9 +71,9 @@ const createNewTask = async (req, res) => {
   //   const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {taskList:newTask._id})
   // }
   // if (newTask) {
-  //   const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {
-  //     $push: { taskList: newTask._id },
-  //   });
+  // const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {
+  //   $push: { taskList: newTask._id },
+  // });
   // }
 };
 

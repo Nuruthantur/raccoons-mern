@@ -51,7 +51,6 @@ const signup = async (req, res) => {
   }
   try {
     // if all credentials provided, we check if user is already in database
-
     const existingUser = await UserModel.findOne({ email: email });
     console.log("existing User -->", existingUser);
     // check if user with this email already exists in the db
@@ -229,6 +228,7 @@ const getProfile = async (req, res) => {
         user: {
           // username: user.username,
           email: user.email,
+          _id: user._id,
           //TODO - userImage: user.userImage,
         },
       },
