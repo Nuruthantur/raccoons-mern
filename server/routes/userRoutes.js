@@ -21,7 +21,8 @@ userRouter.get("/profile", jwtAuth, getProfile);
 
 userRouter.post("/signup", signup);
 userRouter.post("/login", login);
-userRouter.post("/update/:id", updateUser);
+// userRouter.post("/update/:id", updateUser);
+userRouter.post("/update", jwtAuth, updateUser);
 // userRouter.post("/task/new", createNewTask);
 userRouter.post("/task/delete/:id", deleteTask);
 

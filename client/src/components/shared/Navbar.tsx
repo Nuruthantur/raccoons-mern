@@ -106,7 +106,7 @@ function NavBar() {
             </div>
             <div>
               <NavLink
-                to={"/login"}
+                to={"/profile"}
                 className={({ isActive }) => {
                   return (
                     "inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase    rounded-full" +
@@ -116,14 +116,13 @@ function NavBar() {
                   );
                 }}
               >
-                Login
+                Profile
               </NavLink>
             </div>
-
             {!user ? (
               <div>
                 <NavLink
-                  to={"/sign-up"}
+                  to={"/login"}
                   className={({ isActive }) => {
                     return (
                       "inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase    rounded-full" +
@@ -133,42 +132,11 @@ function NavBar() {
                     );
                   }}
                 >
-                  Sign-Up
+                  Login
                 </NavLink>
               </div>
             ) : (
-              // <div>
-              //   <NavLink
-              //     to={"/sign-up"}
-              //     className={({ isActive }) => {
-              //       return (
-              //         "inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase    rounded-full" +
-              //         (!isActive
-              //           ? "text-black bg-violet-500 hover:text-white hover:bg-violet-600 transition duration-200 rounded-full"
-              //           : " text-white bg-violet-600 underline")
-              //       );
-              //     }}
-              //   >
-              //     Authentication(old)
-              //   </NavLink>
-              // </div>
               <>
-                <div>
-                  <NavLink
-                    to={"/profile"}
-                    className={({ isActive }) => {
-                      return (
-                        "inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase    rounded-full" +
-                        (!isActive
-                          ? "text-black bg-violet-500 hover:text-white hover:bg-violet-600 transition duration-200 rounded-full"
-                          : " text-white bg-violet-600 underline")
-                      );
-                    }}
-                  >
-                    Profile
-                  </NavLink>
-                </div>
-
                 <div>
                   <button onClick={logout} className="font-semibold ">
                     Logout
@@ -176,7 +144,7 @@ function NavBar() {
                 </div>
               </>
             )}
-            {user && <p> {user.email}</p>}
+            {/* {user && <p> {user?.username}</p>} */}
           </div>
         </div>
       </nav>

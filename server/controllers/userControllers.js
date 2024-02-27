@@ -1,3 +1,4 @@
+import { isValidObjectId } from "mongoose";
 import UserModel from "../models/userModels.js";
 import {
   encryptUserPassword,
@@ -71,7 +72,7 @@ const signup = async (req, res) => {
           const newUser = await UserModel.create({
             email: email,
             password: hashedPassword,
-            userName: username,
+            username: username,
           });
           console.log("newUser", newUser);
           if (newUser) {
@@ -193,7 +194,8 @@ const login = async (req, res) => {
 
 const updateUser = async (req, res) => {
   console.log(req.body);
-  const { id } = req.params;
+  const id = req.user._id;
+  // const { id } = req.params;
   const valid = isValidObjectId(id);
   if (!valid) return res.status(400).json({ error: "invalid ID" });
   try {

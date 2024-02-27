@@ -12,19 +12,19 @@ interface AuthContextType {
   signup: (email: string, password: string) => Promise<void>;
   updateUser: (values: {
     email: string;
-    userName?: string | undefined;
+    username: string | undefined;
   }) => Promise<void>;
 
   createATask: (values: {
     name: string;
     description: string;
-    userName?: string;
+    username?: string;
   }) => Promise<void>;
 
-  updateUserWithTask: (userName: string, taskId: string) => Promise<void>;
+  updateUserWithTask: (username: string, taskId: string) => Promise<void>;
 
-  // getProfile: (values: { user: User }) => void;
-  getProfile: (email: string, username: string) => Promise<void>;
+  getProfile: (email: string, username: string | undefined) => Promise<void>;
+
   loading: boolean;
 }
 
@@ -158,24 +158,23 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   const checkUserStatus = () => {
     const token = localStorage.getItem("token");
-
     if (token) {
       console.log("user is logged in");
     } else {
       console.log("No user");
     }
-
-    //write a request to our backend to get the user information back when whe refresh
   };
 
   const updateUser = async (values: {
     email: string;
-    userName: string | undefined;
+    username: string | undefined;
   }) => {
     //validation - check email format etc.
+    const token = localStorage.getItem("token");
     if (!user) return;
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${token}`);
     const body = JSON.stringify(values);
     const requestOptions = {
       method: "POST",
@@ -184,7 +183,8 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     };
     try {
       const response = await fetch(
-        `${baseUrl}/api/users/update/${user._id}`,
+        // `${baseUrl}/api/users/update/?id=${user._id}`,
+        `${baseUrl}/api/users/update`,
         requestOptions
       );
       if (response.ok) {
@@ -208,7 +208,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const createATask = async (values: {
     name: string;
     description: string;
-    userName?: string;
+    username?: string;
   }) => {
     const taskHeaders = new Headers();
     taskHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -237,12 +237,12 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const updateUserWithTask = async (taskId: string, userName: string) => {
+  const updateUserWithTask = async (taskId: string, username: string) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     const body = new URLSearchParams();
     body.append("ID form task is ", taskId);
-    body.append("ID from user is ", userName);
+    body.append("ID from user is ", username);
     var options = {
       method: "PATCH",
       headers,
@@ -265,9 +265,8 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  //TODO - move the getProfile function here
-  // do a user token check in the authcontext to have the token every time the page refreshes
   const getProfile = async () => {
+    // email: string, username: string | undefined
     // const [userProfile, setUserProfile] = useState<User[] | null>(null);
     // ({} as User[]);
 

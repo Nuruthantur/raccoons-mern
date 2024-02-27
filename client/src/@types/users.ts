@@ -11,6 +11,6 @@ export interface User {
 export interface UserCredentials {
   email: string;
   password: string;
-  userName: string;
+  username: string;
   userImage?: string;
 }

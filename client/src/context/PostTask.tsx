@@ -41,7 +41,7 @@ const postTask = async (taskName: string, description: string) => {
 const createATask = async (values: {
   name: string;
   description: string;
-  userName: string;
+  username: string;
 }) => {
   const taskHeaders = new Headers();
   taskHeaders.append("Content-Type", "application/x-www-form-urlencoded");

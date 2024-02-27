@@ -36,7 +36,7 @@ const Signup = () => {
       const urlencoded = new URLSearchParams();
       urlencoded.append("email", userCredentials.email);
       urlencoded.append("password", userCredentials.password);
-      urlencoded.append("userName", userCredentials.userName);
+      urlencoded.append("username", userCredentials.username);
       urlencoded.append(
         "userImage",
         userCredentials?.userImage

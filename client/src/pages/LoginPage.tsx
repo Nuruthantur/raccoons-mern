@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 type LoginCredentials = {
@@ -42,13 +42,10 @@ const LoginPage = () => {
   return (
     <div>
       <div className="flex flex-col items-center justify-center h-screen shadow-lg">
-        {/* flex flex-col items-center justify-center h-screen shadow-lg>
-         */}
         <div>
           <h1 className="text-3xl">Login</h1>
           <br />
         </div>
-
         <div className="flex flex-col">
           <div className="flex flex-col items-center justify-center">
             <form
@@ -66,7 +63,6 @@ const LoginPage = () => {
                   onChange={handleInputChange}
                   className={"inputBox"}
                 />
-                {/* <label className="errorLabel">{emailError}</label> */}
               </div>
               <br />
               <div className={"inputContainer"}>

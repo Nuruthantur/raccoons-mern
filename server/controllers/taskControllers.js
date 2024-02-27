@@ -65,16 +65,6 @@ const createNewTask = async (req, res) => {
     console.log("error", error);
     res.status(500).json({ error: "server error" });
   }
-  //REVIEW create a mongoose request to add the task id to the user object
-
-  // if(newTask){
-  //   const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {taskList:newTask._id})
-  // }
-  // if (newTask) {
-  // const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {
-  //   $push: { taskList: newTask._id },
-  // });
-  // }
 };
 
 const updateTask = async (req, res) => {
