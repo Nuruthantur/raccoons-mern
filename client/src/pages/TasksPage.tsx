@@ -15,6 +15,7 @@ type AllTasksResponse = {
 };
 export default function TasksPage() {
   const [allTasks, setAllTasks] = useState<Task[]>([]);
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     const fetchAllTasks = () => {
@@ -33,7 +34,8 @@ export default function TasksPage() {
   }, []);
 
   return (
-    <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col flex-wrap justify-center  h-screen">
+    <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col flex-wrap justify-center h-screen">
+      {/* mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col flex-wrap justify-center h-screen */}
       <div>
         <h1 className="font-bold text-xl mb-2">
           Here is a list of your tasks!
@@ -42,7 +44,6 @@ export default function TasksPage() {
         <p>number of tasks: {allTasks.length}</p>
         <br />
       </div>
-
       {allTasks?.map((task) => {
         return (
           <div
@@ -64,6 +65,7 @@ export default function TasksPage() {
     </div>
   );
 }
+//   { showEdit ? (): ()};
 //todo - add a boxshadow for every created card
 
 // function TasksPage() {

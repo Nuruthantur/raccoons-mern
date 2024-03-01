@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { User } from "../@types/users";
 import { AuthContext } from "../context/AuthContext.tsx";
 import { BiPhone, BiEnvelope, BiMap } from "react-icons/bi";
 import DropdownMenu from "../components/shared/DropdownMenu.tsx";
+import { UploadFileResponse } from "../@types";
 
-function Profile2() {
+const Profile2 = () => {
   // const [userProfile, setUserProfile] = useState<User>({} as User);
 
   // const { getProfile } = useContext(AuthContext);
@@ -18,6 +19,36 @@ function Profile2() {
       email,
       username,
     });
+  };
+  const [selectedFile, setSelectedFile] = useState<File | string>("");
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedFile(e.target.files?.[0] || "");
+  };
+  const handleSubmitFile = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formdata = new FormData();
+    console.log("selectedFile :>> ", selectedFile);
+    formdata.append("userImage", selectedFile);
+
+    const requestOptions = {
+      method: "POST",
+      body: formdata,
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/users/uploadPicture",
+        requestOptions
+      );
+      if (!response.ok) {
+        console.log("something went wrong!");
+      }
+      if (response.ok) {
+        const result = (await response.json()) as UploadFileResponse;
+        console.log("result", result);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
@@ -106,9 +137,11 @@ function Profile2() {
             {user && (
               <div>
                 <h3 className="text-gray-900 dark:text-white">Your Info:</h3>
+                <br />
                 <p className="text-gray-900 dark:text-white">
                   Your Email: {user.email}
                 </p>
+                <br />
                 <p className="text-gray-900 dark:text-white">
                   Your Username:{" "}
                   {user?.username ? user?.username : "you have no username yet"}
@@ -117,12 +150,10 @@ function Profile2() {
             )}
             <br />
             <form onSubmit={handleSubmit}>
-              {/* <button onClick={() => void getProfile()}>THIS IS A BUTTON</button> */}
-              {/* <button onClick={handesubmit}>THIS IS A BUTTON</button> */}
-
-              <h1 className="text-gray-900 dark:text-white">
+              <h1 className="text-gray-900 dark:text-white flex justify-center">
                 Change your Username
               </h1>
+              {/* change email goes here */}
               {/* <br />
               <div>
                 <label htmlFor="Email"></label>
@@ -149,15 +180,37 @@ function Profile2() {
               </div>
 
               <br />
-              <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Change data
-              </button>
+              <div className="flex justify-center">
+                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  Change Username
+                </button>
+              </div>
+            </form>
+            <br />
+            <form onSubmit={void handleSubmitFile}>
+              <h1 className="text-gray-900 dark:text-white flex justify-center">
+                Upload a profile picture!
+              </h1>
+
+              <br />
+
+              <div className="flex justify-center">
+                <input type="file" name="fileUpload" id="fileUpload" />
+              </div>
+              <div className="flex justify-center">
+                <button
+                  className="flex justify-center inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  type="submit"
+                >
+                  Upload
+                </button>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Profile2;

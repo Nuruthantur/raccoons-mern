@@ -7,6 +7,7 @@ import passport from "passport";
 import userRouter from "./routes/userRoutes.js";
 import taskRouter from "./routes/taskRoutes.js";
 import jwtStrategy from "./config/passportConfig.js";
+import cloudinaryConfig from "./config/cloudinary.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ const addMiddlewares = () => {
     })
   );
   app.use(cors());
+  cloudinaryConfig();
   app.use(passport.initialize());
   passport.use(jwtStrategy);
 };

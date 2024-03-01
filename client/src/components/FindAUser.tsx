@@ -76,6 +76,13 @@ const FindOneUser = () => {
                   Found this user:
                 </h2>
                 <p>{foundUser.email}</p>
+                <p>{foundUser.createdAt}</p>
+                <p>{foundUser._id}</p>
+                <p>{foundUser.username}</p>
+                {/* <ul>
+                  <li>{foundUser.taskList}</li>
+                </ul> */}
+
                 {/* //TODO - also display this users tasks here! */}
               </div>
             )}

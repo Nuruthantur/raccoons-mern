@@ -5,6 +5,7 @@ import {
   verifyPassword,
 } from "../utils/passwordServices.js";
 import { generateToken } from "../utils/tokenServices.js";
+import { v2 as cloudinary } from "cloudinary";
 
 const test = (req, res) => {
   console.log("testing successful");
@@ -158,8 +159,8 @@ const login = async (req, res) => {
         const token = generateToken(existingUser._id);
         // D 1 token is NOT generated
         if (!token) {
-          res.status(500).json({
-            message: "something went wrong generating the token",
+          res.status(498).json({
+            message: "Token expired/invalid",
             error: true,
             data: null,
           });
@@ -231,10 +232,40 @@ const getProfile = async (req, res) => {
           // username: user.username,
           email: user.email,
           _id: user._id,
-          //TODO - userImage: user.userImage,
+          userImage: user.userImage,
         },
       },
     });
+  }
+};
+
+const uploadPicture = async (req, res) => {
+  // console.log("uploadPicture function works", req);
+  if (!req.file) {
+    res.status(500).json({
+      message: "File not supported",
+    });
+  }
+
+  if (req.file) {
+    try {
+      const uploadPicture = await cloudinary.uploader.upload(req.file.path, {
+        folder: "userProfiles",
+      });
+      // console.log("uploadPicture", uploadPicture);
+      res.status(201).json({
+        message: "file successfully uploaded",
+        error: false,
+        data: { imageUrl: uploadPicture.secure_url },
+      });
+    } catch (error) {
+      console.log("error", error);
+      res.status(500).json({
+        message: "file not uploaded",
+        error: true,
+        data: null,
+      });
+    }
   }
 };
 
@@ -246,4 +277,5 @@ export {
   login,
   updateUser,
   getProfile,
+  uploadPicture,
 };

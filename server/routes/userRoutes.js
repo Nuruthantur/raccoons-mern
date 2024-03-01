@@ -7,10 +7,12 @@ import {
   signup,
   test,
   updateUser,
+  uploadPicture,
 } from "../controllers/userControllers.js";
 import { createNewTask, deleteTask } from "../controllers/taskControllers.js";
 import passport from "passport";
 import { jwtAuth } from "../middlewares/jwtAuth.js";
+import multerUpload from "../middlewares/multer.js";
 
 const userRouter = express.Router();
 
@@ -23,6 +25,11 @@ userRouter.post("/signup", signup);
 userRouter.post("/login", login);
 // userRouter.post("/update/:id", updateUser);
 userRouter.post("/update", jwtAuth, updateUser);
+userRouter.post(
+  "/uploadPicture",
+  multerUpload.single("userImage"),
+  uploadPicture
+);
 // userRouter.post("/task/new", createNewTask);
 userRouter.post("/task/delete/:id", deleteTask);
 

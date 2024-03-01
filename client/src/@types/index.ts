@@ -1,3 +1,11 @@
 type ResNotOk = {
-    error: string
-}
+  error: string;
+};
+
+export declare type UploadFileResponse = {
+  message: string;
+  error: boolean;
+  data: {
+    imageUrl: string;
+  };
+};
