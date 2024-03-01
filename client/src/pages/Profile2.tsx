@@ -12,7 +12,7 @@ const Profile2 = () => {
   const { user, updateUser } = useContext(AuthContext);
   const [email, setEmail] = useState(user ? user.email : "");
   const [username, setUsername] = useState(user ? user.username : "");
-  console.log(setUsername, setEmail);
+  // console.log(setUsername, setEmail);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await updateUser({
@@ -72,7 +72,7 @@ const Profile2 = () => {
               <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
             </svg>
           </button> */}
-          {/* <DropdownMenu /> */}
+          <DropdownMenu />
           <div
             id="dropdown"
             className="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
@@ -187,7 +187,7 @@ const Profile2 = () => {
               </div>
             </form>
             <br />
-            <form onSubmit={void handleSubmitFile}>
+            <form onSubmit={handleSubmitFile}>
               <h1 className="text-gray-900 dark:text-white flex justify-center">
                 Upload a profile picture!
               </h1>
@@ -195,7 +195,15 @@ const Profile2 = () => {
               <br />
 
               <div className="flex justify-center">
-                <input type="file" name="fileUpload" id="fileUpload" />
+                <input
+                  type="file"
+                  name="fileUpload"
+                  id="fileUpload"
+                  onChange={(e) => {
+                    console.log("event", e.target.files);
+                    if (e.target.files) setSelectedFile(e.target.files[0]);
+                  }}
+                />
               </div>
               <div className="flex justify-center">
                 <button

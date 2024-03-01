@@ -212,8 +212,6 @@ const updateUser = async (req, res) => {
 };
 
 const getProfile = async (req, res) => {
-  // console.log("profile from user");
-
   // console.log("req: ", req.user);
   const { user } = req;
   if (!user) {
@@ -229,10 +227,10 @@ const getProfile = async (req, res) => {
       error: false,
       data: {
         user: {
-          // username: user.username,
           email: user.email,
           _id: user._id,
           userImage: user.userImage,
+          username: user.username,
         },
       },
     });
@@ -240,14 +238,15 @@ const getProfile = async (req, res) => {
 };
 
 const uploadPicture = async (req, res) => {
-  // console.log("uploadPicture function works", req);
+  console.log("uploadPicture function works");
+  console.log("request file", req.file);
   if (!req.file) {
     res.status(500).json({
       message: "File not supported",
     });
   }
-
   if (req.file) {
+    console.log("file exists");
     try {
       const uploadPicture = await cloudinary.uploader.upload(req.file.path, {
         folder: "userProfiles",
