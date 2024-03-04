@@ -188,7 +188,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     try {
       const response = await fetch(
         // `${baseUrl}/api/users/update/?id=${user._id}`,
-        `${baseUrl}/api/users/update/${user._id}`,
+        `${baseUrl}/api/users/update/`,
         requestOptions
       );
       if (response.ok) {
@@ -270,10 +270,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const getProfile = async () => {
-    // email: string, username: string | undefined
-    // const [userProfile, setUserProfile] = useState<User[] | null>(null);
-    // ({} as User[]);
-
     const token = localStorage.getItem("token");
     if (!token) {
       alert("you have to login first");

@@ -6,7 +6,7 @@ const taskSchema = new mongoose.Schema({
   description: { type: String, required: false },
   completed: { type: Boolean, required: false },
   difficulty: { type: String, required: false },
-  status: Boolean,
+  status: { type: Boolean, required: false },
   taskEncouragements: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   taskCelebrations: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
 });

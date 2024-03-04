@@ -5,6 +5,8 @@ import { BiPhone, BiEnvelope, BiMap } from "react-icons/bi";
 import DropdownMenu from "../components/shared/DropdownMenu.tsx";
 import { UploadFileResponse } from "../@types";
 
+//TODO - you can send a file to multer but it is not displayed yet. create a function to get the data from there.
+
 const Profile2 = () => {
   // const [userProfile, setUserProfile] = useState<User>({} as User);
 
@@ -137,7 +139,7 @@ const Profile2 = () => {
               <h1 className="text-gray-900 dark:text-white flex justify-center">
                 Change your Username
               </h1>
-              {/* change email goes here */}
+              {/* change email goes here*/}
               {/* <br />
               <div>
                 <label htmlFor="Email"></label>
@@ -204,7 +206,5 @@ const Profile2 = () => {
     </div>
   );
 };
-
-//TODO - create a new page on which you can update the userprofile. if you click on the edit button, you would navigate to the edit page
 
 export default Profile2;

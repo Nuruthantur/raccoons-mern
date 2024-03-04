@@ -55,7 +55,7 @@ const signup = async (req, res) => {
     // if all credentials provided, we check if user is already in database
     const existingUser = await UserModel.findOne({ email: email });
     console.log("existing User -->", existingUser);
-    // check if user with this email already exists in the db
+    // check if user with this email already exists in the database
     if (existingUser) {
       res.status(401).json({ error: "Email already registered" });
       // alert("A user with this Email address already exists!");
@@ -63,7 +63,6 @@ const signup = async (req, res) => {
     // if there's no user with this email in the db
     if (!existingUser) {
       // encrypt password
-
       try {
         const hashedPassword = await encryptUserPassword(password);
         if (!hashedPassword) {
@@ -91,30 +90,6 @@ const signup = async (req, res) => {
     res.status(500).json({ error: "Something went wrong! :(" });
   }
 };
-
-// const login = async (req, res) => {
-//   console.log(req.body);
-//   const { email, password } = req.body;
-//   if (!email || !password)
-//     return res.status(400).json({ error: "No fields must be empty!" });
-//   try {
-//     const foundUser = await UserModel.findOne({ email });
-//     if (!foundUser)
-//       return res.status(404).json({ error: "No user with that email!" });
-//     if (foundUser.password === password) {
-//       const user = {
-//         _id: foundUser._id,
-//         email: foundUser.email,
-//         username: foundUser.username,
-//         createdAt: foundUser.createdAt,
-//       };
-//       return res.status(200).json(user);
-//     } else res.status(400).json({ error: "Password incorrect!" });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ error: "Something went wrong! :(" });
-//   }
-// };
 
 const login = async (req, res) => {
   if (!req.body.password || !req.body.email) {
@@ -238,8 +213,7 @@ const getProfile = async (req, res) => {
 };
 
 const uploadPicture = async (req, res) => {
-  console.log("uploadPicture function works");
-  console.log("request file", req.file);
+  // console.log("request file", req.file);
   if (!req.file) {
     res.status(500).json({
       message: "File not supported",

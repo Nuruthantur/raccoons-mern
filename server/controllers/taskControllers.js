@@ -49,7 +49,8 @@ const findTaskById = async (req, res) => {
 const createNewTask = async (req, res) => {
   console.log("req.body", req.body);
   console.log("req.user", req.user);
-  //build logic to check required fields coming in the request
+
+  //TODO -  build logic to check required fields coming in the request
 
   try {
     const newTask = await TaskModel.create(req.body);

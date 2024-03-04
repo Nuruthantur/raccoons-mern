@@ -16,7 +16,7 @@ taskRouter.get("/testing", testing);
 taskRouter.get("/all-tasks", getAllTasks);
 taskRouter.get("/find/:taskName", findTaskByName);
 taskRouter.post("/task/new", jwtAuth, createNewTask);
+taskRouter.post("/task/update/:id", updateTask);
 taskRouter.post("/task/delete/:id", deleteTask);
-taskRouter.post("/task/update/:id", updateTask); //updateTask
 
 export default taskRouter;
