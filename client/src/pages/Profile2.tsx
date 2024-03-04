@@ -18,6 +18,8 @@ const Profile2 = () => {
     await updateUser({
       email,
       username,
+      userImage,
+      //REVIEW -
     });
   };
   const [selectedFile, setSelectedFile] = useState<File | string>("");
@@ -220,5 +222,7 @@ const Profile2 = () => {
     </div>
   );
 };
+
+//TODO - create a new page on which you can update the userprofile. if you click on the edit button, you would navigate to the edit page
 
 export default Profile2;

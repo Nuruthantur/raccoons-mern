@@ -1,4 +1,4 @@
-type ResNotOk = {
+export type ResNotOk = {
   error: string;
 };
 

@@ -3,6 +3,8 @@ import { User } from "../@types/users";
 import baseUrl from "../utils/baseurl";
 import { Navigate } from "react-router-dom";
 import { Task } from "../@types/tasks";
+import { ResNotOk } from "../@types/index";
+import { v2 as cloudinary } from "cloudinary";
 
 interface AuthContextType {
   user: User | null;
@@ -13,6 +15,7 @@ interface AuthContextType {
   updateUser: (values: {
     email: string;
     username: string | undefined;
+    userImage: string | undefined;
   }) => Promise<void>;
 
   createATask: (values: {
@@ -168,6 +171,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const updateUser = async (values: {
     email: string;
     username: string | undefined;
+    userImage: string | undefined;
   }) => {
     //validation - check email format etc.
     const token = localStorage.getItem("token");
@@ -184,7 +188,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     try {
       const response = await fetch(
         // `${baseUrl}/api/users/update/?id=${user._id}`,
-        `${baseUrl}/api/users/update`,
+        `${baseUrl}/api/users/update/${user._id}`,
         requestOptions
       );
       if (response.ok) {
@@ -299,9 +303,8 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  // in the useeffect check for the token
   useEffect(() => {
-    console.log("useEffect run", "color:orange");
+    console.log("useEffect checkUserStatus run");
     checkUserStatus();
   }, [user?.email]);
 
