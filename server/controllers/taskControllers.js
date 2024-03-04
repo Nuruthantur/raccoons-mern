@@ -27,10 +27,8 @@ const findTaskByName = async (req, res) => {
   console.log(req.params);
   try {
     const foundTask = await TaskModel.findOne({
-      taskName: req.params.taskName,
-    })
-      .select("-password")
-      .populate({ path: "user" });
+      taskName: req.params.taskName.toLowerCase(),
+    }).populate({ path: "user" });
     if (!foundTask) {
       return res.status(404).json({ error: "No task with this name found" });
     }
@@ -39,11 +37,6 @@ const findTaskByName = async (req, res) => {
     console.log("error ", e);
     res.status(500).json({ error: "server error" });
   }
-};
-
-const findTaskById = async (req, res) => {
-  try {
-  } catch (error) {}
 };
 
 const createNewTask = async (req, res) => {

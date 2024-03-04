@@ -15,11 +15,11 @@ export default function TasksPage() {
   const [hovered, setHovered] = useState(false);
 
   const cheerTask = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log("cheering woooohoooo", e);
+    console.log("woooohoooo", e);
   };
 
   const partyTask = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log("partyyyyy", e);
+    console.log("party!🎉🎉🎉", e);
   };
 
   const deleteTask = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {

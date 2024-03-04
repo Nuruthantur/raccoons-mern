@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import { User } from "../@types/users";
 import baseUrl from "../utils/baseurl";
+import { ResNotOk } from "../@types";
 
 const FindOneUser = () => {
   // console.log(baseUrl);
@@ -79,11 +80,6 @@ const FindOneUser = () => {
                 <p>{foundUser.createdAt}</p>
                 <p>{foundUser._id}</p>
                 <p>{foundUser.username}</p>
-                {/* <ul>
-                  <li>{foundUser.taskList}</li>
-                </ul> */}
-
-                {/* //TODO - also display this users tasks here! */}
               </div>
             )}
           </div>
