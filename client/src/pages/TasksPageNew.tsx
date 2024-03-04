@@ -23,6 +23,7 @@ type TaskResponse = {
 type NewTaskType = {
   taskName: string;
   description: string;
+  difficulty: string;
 };
 
 export interface IDropdownOption {
@@ -90,6 +91,7 @@ function TaskPage() {
       const urlencoded = new URLSearchParams();
       urlencoded.append("taskName", newTaskInputs.taskName);
       urlencoded.append("description", newTaskInputs.description);
+      urlencoded.append("difficulty", difficulty);
 
       const requestOptions = {
         method: "POST",
@@ -169,20 +171,12 @@ function TaskPage() {
               />
             </div>
             <div>
-              <button onClick={handleOpen}>Difficulty</button>
-              {open ? (
-                <div>
-                  <ul>
-                    <li>1{user && user._id}</li>
-                    <li>2</li>
-                    <li>3</li>
-                  </ul>
-                </div>
-              ) : (
-                <div>Is Closed</div>
-              )}
+              <select value={newTask.difficulty} name="difficulty">
+                <option value="easy">easy</option>
+                <option value="medium">medium</option>
+                <option value="hard">hard</option>
+              </select>
             </div>
-
             <button
               className="bg-purple-800 hover:bg-purple-900 duration-300 py-2 px-4  sm:w-50 md:w-56 lg:w-64 font-[Poppins]
            rounded-md text-white"
@@ -191,17 +185,6 @@ function TaskPage() {
             </button>
           </div>
         </form>
-        <div>
-          {/* //FIXME - */}
-          <Dropdown
-            selectedValue={difficulty}
-            onChange={handleChange}
-            label="Choose Difficulty"
-          />
-          {difficulty === "easy" && <p>You chose Easy!</p>}
-          {difficulty === "medium" && <p>You chose Medium!</p>}
-          {difficulty === "hard" && <p>You chose Hard!</p>}
-        </div>
       </div>
 
       {/* get the users tasks and not all tasks! */}

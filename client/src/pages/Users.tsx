@@ -3,6 +3,8 @@ import { User } from "../@types/users";
 import baseUrl from "../utils/baseurl";
 import FindOneUser from "../components/FindAUser";
 
+//NOTE - mongoDB aggregation
+// when you start typing you want to see the results
 function Users() {
   const [allUsers, setAllUsers] = useState<User[]>([]);
 

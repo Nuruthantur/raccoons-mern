@@ -15,7 +15,7 @@ interface AuthContextType {
   updateUser: (values: {
     email: string;
     username: string | undefined;
-    userImage: string | undefined;
+    userImage?: string | undefined;
   }) => Promise<void>;
 
   createATask: (values: {
@@ -171,7 +171,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const updateUser = async (values: {
     email: string;
     username: string | undefined;
-    userImage: string | undefined;
+    userImage?: string | undefined;
   }) => {
     //validation - check email format etc.
     const token = localStorage.getItem("token");

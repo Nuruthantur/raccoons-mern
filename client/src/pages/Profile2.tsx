@@ -12,14 +12,13 @@ const Profile2 = () => {
   const { user, updateUser } = useContext(AuthContext);
   const [email, setEmail] = useState(user ? user.email : "");
   const [username, setUsername] = useState(user ? user.username : "");
-  // console.log(setUsername, setEmail);
+  //REVIEW - console.log(setUsername, setEmail);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await updateUser({
       email,
       username,
-      userImage,
-      //REVIEW -
+      // userImage,
     });
   };
   const [selectedFile, setSelectedFile] = useState<File | string>("");
@@ -57,23 +56,6 @@ const Profile2 = () => {
     <div className="flex justify-center items-center">
       <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <div className="flex justify-end px-4 pt-4 ">
-          {/* <button
-            id="dropdownButton"
-            data-dropdown-toggle="dropdown"
-            className="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
-            type="button"
-          >
-            <span className="sr-only">Open dropdown</span>
-            <svg
-              className="w-5 h-5"
-              // aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 16 3"
-            >
-              <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-            </svg>
-          </button> */}
           <DropdownMenu />
           <div
             id="dropdown"
