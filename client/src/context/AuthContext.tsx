@@ -77,6 +77,7 @@ const defaultValue: AuthContextType = {
   getProfile: () => {
     throw new Error("no provider");
   },
+
   loading: false,
 };
 
@@ -358,6 +359,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         updateUser,
         updateTaskWithUser,
         getProfile,
+
         loading,
       }}
     >

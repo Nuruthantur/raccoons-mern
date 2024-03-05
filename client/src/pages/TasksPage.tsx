@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Task } from "../@types/tasks";
 import baseUrl from "../utils/baseurl";
 import TodoItem from "../components/ToDoItem";
 import Emoji from "../components/shared/Emoji";
+import { AuthContext } from "../context/AuthContext";
+import cheerTask from "../utils/userInteractivity";
 
 type AllTasksResponse = {
   allTasks: Task[];
@@ -13,10 +15,6 @@ export default function TasksPage() {
   const [allTasks, setAllTasks] = useState<Task[]>([]);
 
   const [hovered, setHovered] = useState(false);
-
-  const cheerTask = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log("woooohoooo", e);
-  };
 
   const partyTask = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     console.log("party!🎉🎉🎉", e);
@@ -77,23 +75,33 @@ export default function TasksPage() {
                   Difficulty: {task.difficulty}
                 </div>
                 <div className="flex justify-around">
-                  <Emoji
-                    symbol="💪"
-                    label="flexed-biceps"
-                    handleClick={cheerTask}
-                  />
-
-                  <Emoji
-                    symbol="🎉"
-                    label="party-popper"
-                    handleClick={partyTask}
-                  />
-
-                  <Emoji
-                    symbol="x"
-                    label="exterminate"
-                    handleClick={deleteTask}
-                  />
+                  <div>
+                    <Emoji
+                      symbol="💪"
+                      label="flexed-biceps"
+                      handleClick={() => {
+                        cheerTask(task._id);
+                      }}
+                    />
+                    <br />
+                    {task.taskEncouragements.length}
+                  </div>
+                  <div>
+                    <Emoji
+                      symbol="🎉"
+                      label="party-popper"
+                      handleClick={partyTask}
+                    />
+                    <br />
+                    {task.taskCelebrations.length}
+                  </div>
+                  <div>
+                    <Emoji
+                      symbol="X"
+                      label="exterminate"
+                      handleClick={deleteTask}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

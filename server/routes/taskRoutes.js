@@ -9,6 +9,9 @@ import {
   deleteTask,
   updateTask,
   addEncouragements,
+  deleteEncouragements,
+  addCelebrations,
+  deleteCelebrations,
 } from "../controllers/taskControllers.js";
 
 const taskRouter = express.Router();
@@ -20,5 +23,8 @@ taskRouter.post("/task/new", jwtAuth, createNewTask);
 taskRouter.post("/task/update/:id", jwtAuth, updateTask);
 taskRouter.post("/task/delete/:id", jwtAuth, deleteTask);
 taskRouter.post("/task/addEncouragements", jwtAuth, addEncouragements);
+taskRouter.post("/task/deleteEncouragements", jwtAuth, deleteEncouragements);
+taskRouter.post("/task/addCelebrations", jwtAuth, addCelebrations);
+taskRouter.post("/task/deleteCelebrations", jwtAuth, deleteCelebrations);
 
 export default taskRouter;

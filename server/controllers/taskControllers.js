@@ -111,6 +111,40 @@ const addEncouragements = async (req, res) => {
   }
 };
 
+const deleteEncouragements = async (req, res) => {
+  try {
+    const taskToUpdate = await TaskModel.findById(req.body.taskId);
+    if (!taskToUpdate) return res.status(404).json({ error: "Task not found" });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong :`(" });
+  }
+};
+
+const addCelebrations = async (req, res) => {
+  try {
+    const taskToUpdate = await TaskModel.findById(req.body.taskId);
+    if (!taskToUpdate) return res.status(404).json({ error: "Task not found" });
+    if (taskToUpdate.taskCelebrations.includes(req.user._id)) {
+      return res.status(400).json({ message: "Celebration already exists" });
+    }
+    if (taskToUpdate.completed === true) {
+      return res.status(400).json({ message: "Task is already completed" });
+    }
+
+    const addUserToTask = await TaskModel.findByIdAndUpdate(
+      req.body.taskId,
+      {
+        $push: { taskCelebrations: req.user._id },
+      },
+      { new: true }
+    );
+    res.status(201).json(addUserToTask);
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong :(" });
+  }
+};
+const deleteCelebrations = async (req, res) => {};
+
 const deleteTask = async (req, res) => {
   const deletedTask = await TaskModel.findByIdAndDelete(req.params.id);
   try {
@@ -130,4 +164,7 @@ export {
   updateTask,
   deleteTask,
   addEncouragements,
+  deleteEncouragements,
+  addCelebrations,
+  deleteCelebrations,
 };
