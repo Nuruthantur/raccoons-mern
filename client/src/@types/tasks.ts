@@ -3,7 +3,7 @@ import { User, UserCredentials } from "./users";
 export interface Task {
   _id: string;
   taskName: string;
-  userId: string;
+  userId: { _id: string; email: string } | undefined | string;
   description: string;
   text: string;
   completed: boolean;
@@ -11,8 +11,6 @@ export interface Task {
   difficulty: difficulty;
   taskEncouragements: string[];
   taskCelebrations: string[];
-  // taskEncouragements: Array<User["_id"]>;
-  // taskCelebrations: Array<User["_id"]>;
 }
 
 type difficulty = "easy" | "medium" | "hard";

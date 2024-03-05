@@ -20,6 +20,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/pages/TasksPageNew.tsx"],
+  "include": [
+    "src",
+    "src/pages/TasksPageNew.tsx",
+    "src/components/shared/todo/.CreateTask.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

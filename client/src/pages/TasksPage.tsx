@@ -71,33 +71,29 @@ export default function TasksPage() {
                 <div className="text-gray-700 text-base">
                   Description: {task.description}
                 </div>
-                <div className="text-gray-700 text-base">{task.userId}</div>
+
                 <div className="text-gray-700 text-base">{task.completed}</div>
                 <div className="text-gray-700 text-base">
                   Difficulty: {task.difficulty}
                 </div>
                 <div className="flex justify-around">
-                  <span
-                    onClick={cheerTask}
-                    onPointerOver={() => setHovered(true)}
-                    onPointerOut={() => setHovered(false)}
-                  >
-                    <Emoji
-                      symbol="💪"
-                      label="flexed-biceps"
-                      onPointerOver={() => setHovered(true)}
-                      onPointerOut={() => setHovered(false)}
-                    />
-                  </span>
-                  <span onClick={partyTask}>
-                    <Emoji
-                      symbol="🎉"
-                      label="party-popper"
-                      onPointerOver={() => setHovered(true)}
-                      onPointerOut={() => setHovered(false)}
-                    />
-                  </span>
-                  <span onClick={deleteTask}>X</span>
+                  <Emoji
+                    symbol="💪"
+                    label="flexed-biceps"
+                    handleClick={cheerTask}
+                  />
+
+                  <Emoji
+                    symbol="🎉"
+                    label="party-popper"
+                    handleClick={partyTask}
+                  />
+
+                  <Emoji
+                    symbol="x"
+                    label="exterminate"
+                    handleClick={deleteTask}
+                  />
                 </div>
               </div>
             </div>

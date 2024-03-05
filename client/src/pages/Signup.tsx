@@ -108,7 +108,7 @@ const Signup = () => {
            rounded-md text-white md:w-auto w-full"
             onClick={directUser}
           >
-            Go to login page!
+            Go to login!
           </button>
         </div>
       </div>

@@ -9,7 +9,7 @@ const testing = (req, res) => {
 const getAllTasks = async (req, res) => {
   try {
     const allTasks = await TaskModel.find({}).populate({
-      path: "user",
+      path: "userId",
       select: "email",
     });
     res.status(200).json({
@@ -40,21 +40,29 @@ const findTaskByName = async (req, res) => {
 };
 
 const createNewTask = async (req, res) => {
-  console.log("req.body", req.body);
-  console.log("req.user", req.user);
-
   //TODO -  build logic to check required fields coming in the request
+  const {
+    taskName,
+    description,
+    completed,
+    difficulty,
+    taskEncouragements,
+    taskCelebrations,
+  } = req.body;
 
   try {
-    const newTask = await TaskModel.create(req.body);
-    console.log(newTask);
-    console.log(req.user);
+    const newTask = await TaskModel.create({
+      ...req.body,
+      userId: req.user._id,
+    });
+    // console.log(newTask);
+    // console.log(req.user);
     const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {
       $push: { tasklist: newTask._id },
     });
-    console.log(addTaskToUser);
+    // console.log(addTaskToUser);
     res.status(201).json({ newTask });
-    console.log(newTask);
+    // console.log(newTask);
   } catch (error) {
     console.log("error", error);
     res.status(500).json({ error: "server error" });
@@ -65,9 +73,9 @@ const updateTask = async (req, res) => {
   const { id } = req.params;
   const valid = isValidObjectId(id);
   console.log(valid);
-  if (!valid) return res.status(400).json({ error: "id invalid" });
+  if (!valid) return res.status(400).json({ error: "invalid ID" });
   try {
-    const updatedTask = await TaskModel.findBSyIdAndUpdate(id, req.body, {
+    const updatedTask = await TaskModel.findByIdAndUpdate(id, req.body, {
       new: true,
     });
     if (!updatedTask) return res.status(404).json({ error: "User not found" });
@@ -75,6 +83,31 @@ const updateTask = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+const addEncouragements = async (req, res) => {
+  try {
+    const taskToUpdate = await TaskModel.findById(req.body.taskId);
+    if (!taskToUpdate) return res.status(404).json({ error: "Task not found" });
+    if (taskToUpdate.taskEncouragements.includes(req.user._id)) {
+      return res.status(400).json({ message: "Encouragement already exists" });
+    }
+    if (taskToUpdate.completed === true) {
+      return res.status(400).json({ message: "Task is already completed" });
+    }
+
+    const addUserToTask = await TaskModel.findByIdAndUpdate(
+      req.body.taskId,
+      {
+        $push: { taskEncouragements: req.user._id },
+      },
+      { new: true }
+    );
+    res.status(201).json(addUserToTask);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Something went wrong :(" });
   }
 };
 
@@ -96,4 +129,5 @@ export {
   createNewTask,
   updateTask,
   deleteTask,
+  addEncouragements,
 };

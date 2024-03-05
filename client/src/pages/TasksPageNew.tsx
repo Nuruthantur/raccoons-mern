@@ -48,6 +48,7 @@ function TaskPage() {
   const [input, setInput] = useState("");
   const [allTasks, setAllTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<NewTaskType>({} as NewTaskType);
+  const [completed, setCompleted] = useState<boolean>(false);
 
   const [difficulty, setDifficulty] = useState<"easy" | "medium" | "hard">(
     "easy"
@@ -92,6 +93,7 @@ function TaskPage() {
       urlencoded.append("taskName", newTaskInputs.taskName);
       urlencoded.append("description", newTaskInputs.description);
       urlencoded.append("difficulty", difficulty);
+      urlencoded.append("completed", completed.toString());
 
       const requestOptions = {
         method: "POST",
@@ -119,24 +121,17 @@ function TaskPage() {
     }
   };
 
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log(e);
-    setOpen(!open);
-  };
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("newTask :>> ", newTask);
+    console.log("newTask has been created", newTask);
     addItem2(newTask);
-    // console.log("form submit has run", e);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("handleInputChange runs", e.target.name, e.target.value);
+    // console.log("handleInputChange runs", e.target.name, e.target.value);
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
   };
-  //TODO - create a dropdown menu to choose the difficulty level for a task
+
   return (
     <>
       <div className="flex flex-col justify-center items-center ">
@@ -196,7 +191,7 @@ function TaskPage() {
         <br />
 
         {/* {user &&
-          user.taskList.map((task) => {
+          user?.taskList.map((task) => {
             return (
               <div
                 className="mx-auto text-center  mt-auto mb-auto flex flex-col justify-center"
@@ -217,7 +212,7 @@ function TaskPage() {
             );
           })} */}
       </div>
-      {/* <div className="todolist">
+      <div className="todolist">
         {items.map((item) => {
           const { _id, name, completed } = item;
           return (
@@ -229,7 +224,7 @@ function TaskPage() {
             />
           );
         })}
-      </div> */}
+      </div>
     </>
   );
 }

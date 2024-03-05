@@ -96,7 +96,7 @@ const LoginPage = () => {
            rounded-md text-white md:w-auto w-full"
               onClick={directUserToSignup}
             >
-              NAVIGATE
+              Go to signup!
             </button>
           </div>
         </div>

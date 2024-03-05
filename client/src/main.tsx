@@ -25,11 +25,11 @@ const router = createBrowserRouter([
   {
     element: (
       <AuthContextProvider>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <Layout>
-            <Outlet />
-          </Layout>
-        </ThemeProvider>
+        {/* <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme"> */}
+        <Layout>
+          <Outlet />
+        </Layout>
+        {/* </ThemeProvider> */}
       </AuthContextProvider>
     ),
     children: [

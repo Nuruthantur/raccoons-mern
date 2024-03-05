@@ -26,6 +26,8 @@ interface AuthContextType {
 
   updateUserWithTask: (username: string, taskId: string) => Promise<void>;
 
+  updateTaskWithUser: (username: string, taskId: string) => Promise<void>;
+
   getProfile: (email: string, username: string | undefined) => Promise<void>;
 
   loading: boolean;
@@ -69,6 +71,9 @@ const defaultValue: AuthContextType = {
   updateUserWithTask: () => {
     throw new Error("no provider");
   },
+  updateTaskWithUser: () => {
+    throw new Error("no provider");
+  },
   getProfile: () => {
     throw new Error("no provider");
   },
@@ -104,6 +109,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
       if (response.ok) {
         const result = (await response.json()) as User;
         setUser(result);
+        Navigate({ to: "/profile" });
       } else {
         const result = (await response.json()) as ResNotOk;
         console.log(result);
@@ -214,9 +220,11 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     description: string;
     username?: string;
   }) => {
+    const token = localStorage.getItem("token");
     const taskHeaders = new Headers();
     taskHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     const body = JSON.stringify(values);
+    taskHeaders.append("Authorization", `Bearer ${token}`);
 
     const requestOptions = {
       method: "POST",
@@ -255,6 +263,35 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     try {
       const response = await fetch(
         `${baseUrl}/api/users/updateUserList`,
+        options
+      );
+      if (response.ok) {
+        const result = await response.json();
+        console.log("result :>> ", result);
+      } else {
+        const result = await response.json();
+        console.log(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateTaskWithUser = async (username: string, taskId: string) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
+    const body = new URLSearchParams();
+    body.append("ID form task is ", taskId);
+    body.append("ID from user is ", username);
+    var options = {
+      method: "PATCH",
+      headers,
+      body,
+    };
+    try {
+      //
+      const response = await fetch(
+        `${baseUrl}/api/task/update/${taskId}`,
         options
       );
       if (response.ok) {
@@ -319,6 +356,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         logout,
         signup,
         updateUser,
+        updateTaskWithUser,
         getProfile,
         loading,
       }}
