@@ -89,25 +89,40 @@ const updateTask = async (req, res) => {
 const addEncouragements = async (req, res) => {
   try {
     const taskToUpdate = await TaskModel.findById(req.body.taskId);
-    if (!taskToUpdate) return res.status(404).json({ error: "Task not found" });
+    if (!taskToUpdate)
+      return res.status(404).json({ message: "Task not found" });
+    console.log(taskToUpdate.userId, req.user._id);
+    if (req.user._id.toString() === taskToUpdate.userId.toString())
+      return res.status(401).json({
+        message: "can't cheer for your own butt",
+      });
     if (taskToUpdate.taskEncouragements.includes(req.user._id)) {
-      return res.status(400).json({ message: "Encouragement already exists" });
+      // return res.status(400).json({ message: "Encouragement already exists" });
+      const deleteUserFromTask = await TaskModel.findByIdAndUpdate(
+        req.body.taskId,
+        {
+          $pull: { taskEncouragements: req.user._id },
+        },
+        { new: true }
+      ).populate({ path: "userId" });
+      res.status(201).json(deleteUserFromTask);
     }
     if (taskToUpdate.completed === true) {
       return res.status(400).json({ message: "Task is already completed" });
     }
-
-    const addUserToTask = await TaskModel.findByIdAndUpdate(
-      req.body.taskId,
-      {
-        $push: { taskEncouragements: req.user._id },
-      },
-      { new: true }
-    );
-    res.status(201).json(addUserToTask);
+    if (!taskToUpdate.taskEncouragements.includes(req.user._id)) {
+      const addUserToTask = await TaskModel.findByIdAndUpdate(
+        req.body.taskId,
+        {
+          $push: { taskEncouragements: req.user._id },
+        },
+        { new: true }
+      ).populate({ path: "userId" });
+      res.status(201).json(addUserToTask);
+    }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Something went wrong :(" });
+    res.status(500).json({ message: "Something went wrong :(" });
   }
 };
 
@@ -115,6 +130,20 @@ const deleteEncouragements = async (req, res) => {
   try {
     const taskToUpdate = await TaskModel.findById(req.body.taskId);
     if (!taskToUpdate) return res.status(404).json({ error: "Task not found" });
+    if (req.user._id.toString() === taskToUpdate.userId.toString())
+      return res
+        .status(401)
+        .json({ message: "can't delete other users cheering" });
+    if (taskToUpdate.completed === true) {
+      return res.status(400).json({ message: "Task is already completed" });
+    }
+    const deleteUserFromTask = await TaskModel.findByIdAndUpdate(
+      req.body.taskId,
+      {
+        $pull: { taskEncouragements: req.user._id },
+      },
+      { new: true }
+    ).populate({ path: "userId" });
   } catch (error) {
     res.status(500).json({ error: "Something went wrong :`(" });
   }
@@ -125,12 +154,18 @@ const addCelebrations = async (req, res) => {
     const taskToUpdate = await TaskModel.findById(req.body.taskId);
     if (!taskToUpdate) return res.status(404).json({ error: "Task not found" });
     if (taskToUpdate.taskCelebrations.includes(req.user._id)) {
-      return res.status(400).json({ message: "Celebration already exists" });
+      const deleteUserFromTask = await TaskModel.findByIdAndUpdate(
+        req.body.taskId,
+        {
+          $pull: { taskCelebrations: req.user._id },
+        },
+        { new: true }
+      ).populate({ path: "userId" });
+      res.status(201).json(deleteUserFromTask);
     }
-    if (taskToUpdate.completed === true) {
-      return res.status(400).json({ message: "Task is already completed" });
+    if (taskToUpdate.completed !== true) {
+      return res.status(400).json({ message: "Task is not completed yet" });
     }
-
     const addUserToTask = await TaskModel.findByIdAndUpdate(
       req.body.taskId,
       {
@@ -156,6 +191,48 @@ const deleteTask = async (req, res) => {
   }
 };
 
+const finishedTask = async (req, res) => {
+  try {
+    const taskToUpdate = await TaskModel.findById(req.body.taskId);
+    if (!taskToUpdate) return res.status(404).json({ error: "Task not found" });
+    if (taskToUpdate.completed === true) {
+      return res.status(400).json({ message: "Task is already completed" });
+    }
+
+    const addUserToTask = await TaskModel.findByIdAndUpdate(
+      req.body.taskId,
+      {
+        completed: true,
+      },
+      { new: true }
+    );
+    res.status(201).json(addUserToTask);
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong :(`" });
+  }
+};
+
+const favouriteTask = async (req, res) => {
+  try {
+    const taskToUpdate = await TaskModel.findById(req.body.taskId);
+    if (!taskToUpdate) return res.status(404).json({ error: "Task not found" });
+    if (taskToUpdate.favourited === true) {
+      return res.status(400).json({ message: "Task is already favourited" });
+    }
+
+    const addUserToTask = await TaskModel.findByIdAndUpdate(
+      req.body.taskId,
+      {
+        favourited: true,
+      },
+      { new: true }
+    );
+    res.status(201).json(addUserToTask);
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong :(`" });
+  }
+};
+
 export {
   testing,
   getAllTasks,
@@ -167,4 +244,6 @@ export {
   deleteEncouragements,
   addCelebrations,
   deleteCelebrations,
+  finishedTask,
+  favouriteTask,
 };

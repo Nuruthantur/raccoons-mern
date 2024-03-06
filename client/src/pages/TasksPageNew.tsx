@@ -3,12 +3,8 @@ import baseUrl from "../utils/baseurl";
 import TodoItem from "../components/ToDoItem";
 import AllTasksList from "../components/AllTasks";
 import { Task } from "../@types/tasks";
-import TasksPage from "./TasksPage";
-import { Button } from "../components/ui/button";
-import { User } from "../@types/users";
 import { AuthContext } from "../context/AuthContext";
-import DropdownComponent1 from "../components/DropdownComponent";
-import Dropdown from "../components/Dropdown";
+
 type AllTasksResponse = {
   allTasks: Task[];
   number: number;
@@ -63,9 +59,9 @@ function TaskPage() {
         .then((result: AllTasksResponse) => {
           const foundTasks = result.allTasks;
           // const numberOfTasks = result.number;
-          console.log("result", result);
+          // console.log("result", result);
           setAllTasks(foundTasks);
-          console.log(foundTasks);
+          // console.log(foundTasks);
         })
         .catch((e) => console.log(e));
     };
@@ -106,17 +102,16 @@ function TaskPage() {
           requestOptions
         );
         if (!response.ok) {
-          // console.log("response not ok", response);
           const result = await response.json();
           console.log("result ", result);
         }
 
         if (response.ok) {
           const result = (await response.json()) as TaskResponse;
-          console.log("result ", result);
+          // console.log("result ", result);
         }
       } catch (error) {
-        console.log("error :>> ", error);
+        console.log("error - could not create new item", error);
       }
     }
   };
@@ -128,7 +123,6 @@ function TaskPage() {
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log("handleInputChange runs", e.target.name, e.target.value);
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
   };
 

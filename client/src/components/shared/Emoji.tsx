@@ -4,12 +4,14 @@ import PropTypes from "prop-types";
 type Props = {
   label: string;
   symbol: string;
-  handleClick: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
+  handleClick:
+    | ((e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void)
+    | undefined;
 };
 
 const Emoji = (props: Props) => (
   <span
-    style={{ cursor: "pointer" }}
+    style={props.handleClick ? { cursor: "pointer" } : {}}
     className="emoji"
     role="img"
     aria-label={props.label ? props.label : ""}

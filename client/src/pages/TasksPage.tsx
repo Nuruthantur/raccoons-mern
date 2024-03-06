@@ -1,10 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Task } from "../@types/tasks";
 import baseUrl from "../utils/baseurl";
 import TodoItem from "../components/ToDoItem";
 import Emoji from "../components/shared/Emoji";
+import {
+  cheerTask,
+  celebrateTask,
+  setTaskToFinished,
+} from "../utils/userInteractivity";
 import { AuthContext } from "../context/AuthContext";
-import cheerTask from "../utils/userInteractivity";
 
 type AllTasksResponse = {
   allTasks: Task[];
@@ -12,13 +16,10 @@ type AllTasksResponse = {
   status: string;
 };
 export default function TasksPage() {
+  const { user } = useContext(AuthContext);
   const [allTasks, setAllTasks] = useState<Task[]>([]);
 
   const [hovered, setHovered] = useState(false);
-
-  const partyTask = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log("party!🎉🎉🎉", e);
-  };
 
   const deleteTask = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     console.log("EXTERMINATE", e);
@@ -55,9 +56,12 @@ export default function TasksPage() {
         <br />
       </div>
       {allTasks?.map((task) => {
+        const taskOwner =
+          typeof task.userId === "string" ? task.userId : task.userId._id;
+
         return (
           <div
-            className="mx-auto text-center mt-auto mb-auto flex flex-row flex-wrap justify-center"
+            className="mx-auto text-center mt-auto mb-auto flex flex-column flex-wrap justify-center"
             key={task._id}
           >
             <div className="max-w-sm rounded overflow-hidden shadow-lg">
@@ -70,8 +74,10 @@ export default function TasksPage() {
                   Description: {task.description}
                 </div>
 
-                <div className="text-gray-700 text-base">{task.completed}</div>
                 <div className="text-gray-700 text-base">
+                  {task.completed ? "complete" : "incomplete"}
+                </div>
+                <div className=" text-gray-700 text-base">
                   Difficulty: {task.difficulty}
                 </div>
                 <div className="flex justify-around">
@@ -79,9 +85,13 @@ export default function TasksPage() {
                     <Emoji
                       symbol="💪"
                       label="flexed-biceps"
-                      handleClick={() => {
-                        cheerTask(task._id);
-                      }}
+                      handleClick={
+                        taskOwner === user?._id
+                          ? undefined
+                          : () => {
+                              cheerTask(task._id, setAllTasks);
+                            }
+                      }
                     />
                     <br />
                     {task.taskEncouragements.length}
@@ -90,10 +100,28 @@ export default function TasksPage() {
                     <Emoji
                       symbol="🎉"
                       label="party-popper"
-                      handleClick={partyTask}
+                      handleClick={
+                        taskOwner === user?._id
+                          ? undefined
+                          : () => {
+                              cheerTask(task._id, setAllTasks);
+                            }
+                      }
                     />
                     <br />
                     {task.taskCelebrations.length}
+                  </div>
+                  <div></div>
+                  {/* if task owned by user then show logic from here */}
+
+                  <div>
+                    <Emoji
+                      symbol="✅"
+                      label="checkmark"
+                      handleClick={() => {
+                        setTaskToFinished(task._id);
+                      }}
+                    />
                   </div>
                   <div>
                     <Emoji

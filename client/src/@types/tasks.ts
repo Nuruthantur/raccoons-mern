@@ -3,7 +3,7 @@ import { User, UserCredentials } from "./users";
 export interface Task {
   _id: string;
   taskName: string;
-  userId: { _id: string; email: string } | undefined | string;
+  userId: { _id: string; email: string } | string;
   description: string;
   text: string;
   completed: boolean;
