@@ -70,7 +70,7 @@ function TaskPage() {
 
   const addItem2 = async (newTaskInputs: NewTaskType) => {
     //TODO - create the Request for our backend
-    //NOTE -  - check existing fields before submit
+    //NOTE -  check existing fields before submit
 
     if (!newTaskInputs.taskName) {
       alert("Task must have a name");
@@ -179,32 +179,10 @@ function TaskPage() {
       {/* get the users tasks and not all tasks! */}
       <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col justify-center  h-screen">
         <h1 className="font-bold text-xl mb-2">
-          Here is a list of your tasks!
+          {/* Here is a list of your tasks! */}
         </h1>
         {/* <AllTasksList /> */}
         <br />
-
-        {/* {user &&
-          user?.taskList.map((task) => {
-            return (
-              <div
-                className="mx-auto text-center  mt-auto mb-auto flex flex-col justify-center"
-                key={task._id}
-              >
-                <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                  <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">
-                      {task.taskName}
-                    </div>
-                    <br />
-                    <p className="text-gray-700 text-base">
-                      {task.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })} */}
       </div>
       <div className="todolist">
         {items.map((item) => {

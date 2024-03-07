@@ -48,7 +48,6 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        //FIXME - fix error for const ProfilePage: () => void | JSX.Element
         path: "/profile",
         element: <ProfilePage />,
       },

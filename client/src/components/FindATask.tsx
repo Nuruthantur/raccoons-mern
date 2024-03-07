@@ -3,6 +3,8 @@ import { Task } from "../@types/tasks";
 import { ResNotOk } from "../@types";
 import baseUrl from "../utils/baseurl";
 
+//NOTE - unused for now
+
 const findATask = () => {
   const [foundTask, setFoundTask] = useState<Task | null>(null);
   const inputValue = useRef("");
@@ -32,3 +34,5 @@ const findATask = () => {
     }
   };
 };
+
+export default findATask;

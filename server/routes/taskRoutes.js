@@ -12,7 +12,6 @@ import {
   addCelebrations,
   finishedTask,
   favouriteTask,
-  deleteTaskWithParams,
 } from "../controllers/taskControllers.js";
 
 const taskRouter = express.Router();

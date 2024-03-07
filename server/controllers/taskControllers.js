@@ -198,22 +198,6 @@ const deleteTask = async (req, res) => {
   }
 };
 
-const deleteTaskWithParams = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const task = await TaskModel.findByIdAndDelete(id);
-    if (!task)
-      return res.status(404).json({
-        error: "No task with this with id " + id + " found",
-      });
-    res.status(201).json({ task });
-    console.log("Task deleted: ", task);
-  } catch (error) {
-    console.log("error deleting task", error);
-    res.status(500).json({ message: "server error deleting task" });
-  }
-};
-
 const finishedTask = async (req, res) => {
   try {
     const taskToUpdate = await TaskModel.findById(req.body.taskId);
@@ -269,5 +253,4 @@ export {
   deleteCelebrations,
   finishedTask,
   favouriteTask,
-  deleteTaskWithParams,
 };

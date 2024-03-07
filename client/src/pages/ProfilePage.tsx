@@ -16,8 +16,7 @@ const ProfilePage = () => {
   const [username, setUsername] = useState(user ? user.username : "");
   const navigate = useNavigate();
   const handleClick = () => {
-    console.log("button was clicked");
-    deleteAccount();
+    console.log("delete account button was clicked");
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
