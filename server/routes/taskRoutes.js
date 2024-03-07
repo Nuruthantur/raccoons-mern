@@ -2,7 +2,6 @@ import express from "express";
 import { jwtAuth } from "../middlewares/jwtAuth.js";
 
 import {
-  testing,
   getAllTasks,
   findTaskByName,
   createNewTask,
@@ -18,7 +17,6 @@ const taskRouter = express.Router();
 
 //REVIEW - here are the routes for the task controller
 
-taskRouter.get("/testing", testing);
 taskRouter.get("/all-tasks", getAllTasks);
 taskRouter.get("/find/:taskName", findTaskByName);
 

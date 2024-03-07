@@ -15,7 +15,6 @@ const LoginPage = () => {
   // useState<LoginCredentials | null>(null);
   const redirectTo = useNavigate();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("event goes brrrr :P", e.target.name, e.target.value);
     setLoginCredentials({
       ...loginCredentials,
       [e.target.name]: e.target.value,

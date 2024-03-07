@@ -8,7 +8,7 @@ import {
 
 const Products = [
   { name: "iOS App", link: "#" },
-  { name: "Android App", link: "#" },
+  { name: "awesome app things", link: "#" },
   { name: "Group Plans", link: "#" },
   { name: "How It Works", link: "#" },
   { name: "Here is royal stuff", link: "#" },

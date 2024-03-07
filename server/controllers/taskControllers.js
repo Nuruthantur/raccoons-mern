@@ -1,11 +1,6 @@
 import TaskModel from "../models/taskModels.js";
 import UserModel from "../models/userModels.js";
 
-const testing = (req, res) => {
-  console.log("here could be your testing");
-  res.json({ message: "hi mom" });
-};
-
 const getAllTasks = async (req, res) => {
   try {
     const allTasks = await TaskModel.find({}).populate({
@@ -55,12 +50,10 @@ const createNewTask = async (req, res) => {
       ...req.body,
       userId: req.user._id,
     });
-    // console.log(newTask);
-    // console.log(req.user);
     const addTaskToUser = await UserModel.findByIdAndUpdate(req.user._id, {
       $push: { tasklist: newTask._id },
     });
-    // console.log(addTaskToUser);
+    console.log(addTaskToUser);
     res.status(201).json({ newTask });
     // console.log(newTask);
   } catch (error) {
@@ -126,29 +119,6 @@ const addEncouragements = async (req, res) => {
   }
 };
 
-const deleteEncouragements = async (req, res) => {
-  try {
-    const taskToUpdate = await TaskModel.findById(req.body.taskId);
-    if (!taskToUpdate) return res.status(404).json({ error: "Task not found" });
-    if (req.user._id.toString() === taskToUpdate.userId.toString())
-      return res
-        .status(401)
-        .json({ message: "can't delete other users cheering" });
-    if (taskToUpdate.completed === true) {
-      return res.status(400).json({ message: "Task is already completed" });
-    }
-    const deleteUserFromTask = await TaskModel.findByIdAndUpdate(
-      req.body.taskId,
-      {
-        $pull: { taskEncouragements: req.user._id },
-      },
-      { new: true }
-    ).populate({ path: "userId" });
-  } catch (error) {
-    res.status(500).json({ error: "Something went wrong :`(" });
-  }
-};
-
 const addCelebrations = async (req, res) => {
   try {
     const taskToUpdate = await TaskModel.findById(req.body.taskId);
@@ -180,7 +150,6 @@ const addCelebrations = async (req, res) => {
     res.status(500).json({ message: "Something went wrong :`(" });
   }
 };
-const deleteCelebrations = async (req, res) => {};
 
 const deleteTask = async (req, res) => {
   const deletedTask = await TaskModel.findByIdAndDelete(req.body._id);
@@ -241,16 +210,13 @@ const favouriteTask = async (req, res) => {
 };
 
 export {
-  testing,
   getAllTasks,
   findTaskByName,
   createNewTask,
   updateTask,
   deleteTask,
   addEncouragements,
-  deleteEncouragements,
   addCelebrations,
-  deleteCelebrations,
   finishedTask,
   favouriteTask,
 };
