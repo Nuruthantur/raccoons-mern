@@ -86,7 +86,7 @@ const celebrateTask = async (
       console.log(result);
     }
   } catch (error) {
-    console.log("celebration not possible; no fun not ever :/", error);
+    console.log("celebration not possible", error);
   }
 };
 
@@ -156,4 +156,55 @@ const setTaskToFinished = async (taskId: string) => {
   }
 };
 
-export { cheerTask, celebrateTask, favouriteTask, likeTask, setTaskToFinished };
+const deleteTask = async (
+  taskId: string,
+  setAllTasks: React.Dispatch<React.SetStateAction<Task[]>>
+) => {
+  const token = localStorage.getItem("token");
+  const headers = new Headers();
+  headers.append("Content-Type", "application/x-www-form-urlencoded");
+  headers.append("Authorization", `Bearer ${token}`);
+  const urlencoded = new URLSearchParams();
+  urlencoded.append("taskId", taskId);
+  const requestOptions = {
+    method: "POST",
+    headers: headers,
+    body: urlencoded,
+  };
+  try {
+    const response = await fetch(
+      `${baseUrl}/api/tasks/task/deleteTask`,
+      requestOptions
+    );
+    if (!response.ok) {
+      const result = (await response.json()) as ResNotOk;
+      console.log("oh noooo", result);
+    }
+    if (response.ok) {
+      console.log(response);
+      const result = (await response.json()) as Task;
+      setAllTasks((prevState) => {
+        const newArray: Task[] = prevState.map((task) => {
+          if (task._id === result._id) {
+            return result;
+          } else {
+            return task;
+          }
+        });
+        return newArray;
+      });
+      console.log(result);
+    }
+  } catch (error) {
+    console.log("could not delete task", error);
+  }
+};
+
+export {
+  cheerTask,
+  celebrateTask,
+  favouriteTask,
+  likeTask,
+  setTaskToFinished,
+  deleteTask,
+};

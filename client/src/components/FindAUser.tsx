@@ -74,12 +74,12 @@ const FindOneUser = () => {
             {foundUser && (
               <div>
                 <h2 className="block text-gray-700 text-sm font-bold mb-2">
-                  Found this user:
+                  Found user:
                 </h2>
-                <p>{foundUser.email}</p>
-                <p>{foundUser.createdAt}</p>
-                <p>{foundUser._id}</p>
-                <p>{foundUser.username}</p>
+                <p>Email: {foundUser.email}</p>
+                <p>Username: {foundUser.username}</p>
+                //TODO - display the tasklist of the found user
+                {/* <p>{foundUser.taskList}</p> */}
               </div>
             )}
           </div>

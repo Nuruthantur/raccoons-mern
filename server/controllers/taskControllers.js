@@ -17,9 +17,9 @@ const getAllTasks = async (req, res) => {
       number: allTasks.length,
       allTasks,
     });
-  } catch (e) {
-    console.log("error for getAllTasks", e);
-    res.status(500).json({ error: "server error" });
+  } catch (error) {
+    console.log("error for getAllTasks", error);
+    res.status(500).json({ message: "server error" });
   }
 };
 
@@ -33,9 +33,9 @@ const findTaskByName = async (req, res) => {
       return res.status(404).json({ error: "No task with this name found" });
     }
     res.status(200).json(foundTask);
-  } catch (e) {
-    console.log("error ", e);
-    res.status(500).json({ error: "server error" });
+  } catch (error) {
+    console.log("error ", error);
+    res.status(500).json({ message: "server error" });
   }
 };
 
@@ -65,7 +65,7 @@ const createNewTask = async (req, res) => {
     // console.log(newTask);
   } catch (error) {
     console.log("error", error);
-    res.status(500).json({ error: "server error" });
+    res.status(500).json({ message: "server error" });
   }
 };
 
@@ -82,7 +82,7 @@ const updateTask = async (req, res) => {
     res.status(200).json(updatedTask);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -166,28 +166,51 @@ const addCelebrations = async (req, res) => {
     if (taskToUpdate.completed !== true) {
       return res.status(400).json({ message: "Task is not completed yet" });
     }
-    const addUserToTask = await TaskModel.findByIdAndUpdate(
-      req.body.taskId,
-      {
-        $push: { taskCelebrations: req.user._id },
-      },
-      { new: true }
-    );
-    res.status(201).json(addUserToTask);
+    if (!taskToUpdate.taskCelebrations.includes(req.user._id)) {
+      const addUserToTask = await TaskModel.findByIdAndUpdate(
+        req.body.taskId,
+        {
+          $push: { taskCelebrations: req.user._id },
+        },
+        { new: true }
+      );
+      res.status(201).json(addUserToTask);
+    }
   } catch (error) {
-    res.status(500).json({ error: "Something went wrong :(" });
+    res.status(500).json({ message: "Something went wrong :`(" });
   }
 };
 const deleteCelebrations = async (req, res) => {};
 
 const deleteTask = async (req, res) => {
-  const deletedTask = await TaskModel.findByIdAndDelete(req.params.id);
+  const deletedTask = await TaskModel.findByIdAndDelete(req.body._id);
   try {
+    if (!deletedTask) {
+      return res
+        .status(404)
+        .json({ error: "No task with this id found or deleted." });
+    }
     res.status(201).json({ deletedTask });
     console.log("Task deleted: ", deletedTask);
   } catch (error) {
     console.log("error deleting task", error);
-    res.status(500).json({ error: "server error deleting task" });
+    res.status(500).json({ message: "server error deleting task" });
+  }
+};
+
+const deleteTaskWithParams = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const task = await TaskModel.findByIdAndDelete(id);
+    if (!task)
+      return res.status(404).json({
+        error: "No task with this with id " + id + " found",
+      });
+    res.status(201).json({ task });
+    console.log("Task deleted: ", task);
+  } catch (error) {
+    console.log("error deleting task", error);
+    res.status(500).json({ message: "server error deleting task" });
   }
 };
 
@@ -246,4 +269,5 @@ export {
   deleteCelebrations,
   finishedTask,
   favouriteTask,
+  deleteTaskWithParams,
 };

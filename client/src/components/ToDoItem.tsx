@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import baseUrl from "../utils/baseurl";
 
-//REVIEW - use the delete item function to create a new reusable whatever thingy to delte a task
+//TODO - create a component that lets you delete a task
 
-function TodoItem(props) {
+function TodoItem(props: any) {
   const { name, id, completed, setItems } = props;
 
   const deleteTodo = async (id) => {

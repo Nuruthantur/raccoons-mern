@@ -1,8 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 
+//REVIEW - Mongoose schema for Task model; the userId, taskEncouragements, and taskCelebrations are populated from the User model
+
 const taskSchema = new mongoose.Schema({
   taskName: { type: String, required: true },
-  //REVIEW - how to add a whole object at once
   userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "user" },
   description: { type: String, required: false },
   completed: { type: Boolean, required: false },

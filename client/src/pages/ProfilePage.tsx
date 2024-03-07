@@ -1,22 +1,24 @@
 import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
-import { User } from "../@types/users";
+import { User } from "../@types/users.ts";
 import { AuthContext } from "../context/AuthContext.tsx";
 import { BiPhone, BiEnvelope, BiMap } from "react-icons/bi";
 import DropdownMenu from "../components/shared/DropdownMenu.tsx";
-import { UploadFileResponse } from "../@types";
+import { UploadFileResponse } from "../@types/index.ts";
 import { useNavigate } from "react-router-dom";
+import Button from "../components/shared/Button.tsx";
+import baseUrl from "../utils/baseurl.ts";
 
-//TODO - you can send a file to multer but it is not displayed yet. create a function to get the data from there.
+//TODO - you can send a file to multer but it is not displayed lol; create logic to handle this ^^
 
-const Profile2 = () => {
-  // const [userProfile, setUserProfile] = useState<User>({} as User);
-
-  // const { getProfile } = useContext(AuthContext);
+const ProfilePage = () => {
   const { user, updateUser } = useContext(AuthContext);
   const [email, setEmail] = useState(user ? user.email : "");
   const [username, setUsername] = useState(user ? user.username : "");
   const navigate = useNavigate();
-  //REVIEW - console.log(setUsername, setEmail);
+  const handleClick = () => {
+    console.log("button was clicked");
+    deleteAccount();
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await updateUser({
@@ -55,6 +57,29 @@ const Profile2 = () => {
       console.log("error", error);
     }
   };
+  const deleteAccount = async () => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const response = await fetch(
+        `${baseUrl}api/users/deleteAccount`,
+        requestOptions
+      );
+      if (!response.ok) {
+        console.log("something went wrong!");
+      }
+      if (response.ok) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   if (!user) {
     return navigate("/login");
   }
@@ -67,34 +92,7 @@ const Profile2 = () => {
             <div
               id="dropdown"
               className="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-            >
-              <ul className="py-2" aria-labelledby="dropdownButton">
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    Edit
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    Export Data
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    Delete
-                  </a>
-                </li>
-              </ul>
-            </div>
+            ></div>
           </div>
           <div className="flex flex-col items-center pb-10">
             <img
@@ -207,6 +205,7 @@ const Profile2 = () => {
                   </button>
                 </div>
               </form>
+              <Button label="Delete Account" onClick={handleClick} />
             </div>
           </div>
         </div>
@@ -215,4 +214,4 @@ const Profile2 = () => {
   }
 };
 
-export default Profile2;
+export default ProfilePage;

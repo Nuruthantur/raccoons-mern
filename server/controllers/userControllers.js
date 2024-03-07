@@ -171,7 +171,6 @@ const login = async (req, res) => {
 const updateUser = async (req, res) => {
   console.log(req.body);
   const id = req.user._id;
-  // const { id } = req.params;
   const valid = isValidObjectId(id);
   if (!valid) return res.status(400).json({ error: "invalid ID" });
   try {
@@ -183,6 +182,23 @@ const updateUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Something went wrong..." });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  const valid = isValidObjectId(id);
+  console.log(valid);
+  if (!valid) return res.status(400).json({ error: "ID MISSING" });
+  try {
+    const deleteUser = await UserModel.findByIdAndDelete(id, req.body, {
+      new: true,
+    });
+    if (!deleteUser) return res.status(404).json({ error: "User not found" });
+    res.status(200).json(deleteUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Something went wrong" });
   }
 };
 
@@ -251,4 +267,5 @@ export {
   updateUser,
   getProfile,
   uploadPicture,
+  deleteUser,
 };

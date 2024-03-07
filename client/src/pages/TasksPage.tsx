@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Task } from "../@types/tasks";
 import baseUrl from "../utils/baseurl";
-import TodoItem from "../components/ToDoItem";
+
 import Emoji from "../components/shared/Emoji";
 import {
   cheerTask,
   celebrateTask,
+  deleteTask,
   setTaskToFinished,
 } from "../utils/userInteractivity";
 import { AuthContext } from "../context/AuthContext";
@@ -20,10 +21,6 @@ export default function TasksPage() {
   const [allTasks, setAllTasks] = useState<Task[]>([]);
 
   const [hovered, setHovered] = useState(false);
-
-  const deleteTask = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log("EXTERMINATE", e);
-  };
 
   useEffect(() => {
     const fetchAllTasks = () => {
@@ -46,7 +43,7 @@ export default function TasksPage() {
   }, [hovered]);
 
   return (
-    <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-col flex-wrap justify-center h-screen">
+    <div className="mx-auto text-center rounded-lg shadow-md mt-auto mb-auto flex flex-row flex-wrap justify-center h-screen">
       <div>
         <h1 className="font-bold text-xl mb-2">
           Here is a list of tasks of all users!
@@ -104,22 +101,25 @@ export default function TasksPage() {
                         taskOwner === user?._id
                           ? undefined
                           : () => {
-                              cheerTask(task._id, setAllTasks);
+                              celebrateTask(task._id, setAllTasks);
                             }
                       }
                     />
                     <br />
                     {task.taskCelebrations.length}
                   </div>
-                  <div></div>
-                  {/* if task owned by user then show logic from here */}
-
+                  <div>
+                    {/* //NOTE - there is an empty div to spread the others in two
+                    sections to the left and right */}
+                  </div>
+                  {/* //TODO - only show the finished and delete button when the user owns the tasks */}
                   <div>
                     <Emoji
                       symbol="✅"
                       label="checkmark"
                       handleClick={() => {
-                        setTaskToFinished(task._id);
+                        alert("logic coming soon");
+                        // setTaskToFinished(task._id);
                       }}
                     />
                   </div>
@@ -127,7 +127,13 @@ export default function TasksPage() {
                     <Emoji
                       symbol="X"
                       label="exterminate"
-                      handleClick={deleteTask}
+                      handleClick={
+                        taskOwner === user?._id
+                          ? undefined
+                          : () => {
+                              deleteTask(task._id, setAllTasks);
+                            }
+                      }
                     />
                   </div>
                 </div>
@@ -139,4 +145,4 @@ export default function TasksPage() {
     </div>
   );
 }
-//todo - add a boxshadow for every created card
+//todo - add a box shadow for every created card

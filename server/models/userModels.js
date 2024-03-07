@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
+//REVIEW - Mongoose schema for User model; the taskList and finishedTasks are populated from the Task model
+
 const userSchema = new mongoose.Schema(
   {
     // _id: Schema.Types.ObjectId,

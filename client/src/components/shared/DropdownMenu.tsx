@@ -55,7 +55,7 @@ export default function DropdownMenu() {
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  Support
+                  Delete Account
                 </a>
               )}
             </Menu.Item>
@@ -77,8 +77,6 @@ export default function DropdownMenu() {
                 {({ active }) => (
                   <button
                     type="button"
-                    // onClick={navigate("/login")}
-                    //REVIEW - navigates to login even if you only click on more; prevent default?
                     className={classNames(
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                       "block w-full px-4 py-2 text-left text-sm"

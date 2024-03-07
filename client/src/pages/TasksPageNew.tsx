@@ -69,8 +69,8 @@ function TaskPage() {
   }, []);
 
   const addItem2 = async (newTaskInputs: NewTaskType) => {
-    //create the Request for our backend
-    //REVIEW create logic to check existing fields before submit
+    //TODO - create the Request for our backend
+    //NOTE -  - check existing fields before submit
 
     if (!newTaskInputs.taskName) {
       alert("Task must have a name");
