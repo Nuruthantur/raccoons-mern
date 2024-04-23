@@ -152,6 +152,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         if (response.ok) {
           const result = (await response.json()) as LoginResponse;
           console.log("result ", result);
+          alert("login successful");
           if (result.data.token) {
             // Store token in local storage
             localStorage.setItem("token", result.data.token);
@@ -361,8 +362,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         getProfile,
 
         loading,
-      }}
-    >
+      }}>
       {children}
     </AuthContext.Provider>
   );

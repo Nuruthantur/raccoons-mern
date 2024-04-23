@@ -23,9 +23,7 @@ const LoginPage = () => {
 
   // const [emailError, setEmailError] = useState("");
   // const [passwordError, setPasswordError] = useState("");
-  const { login } = useContext(AuthContext);
-  const { user } = useContext(AuthContext);
-  // if (user) return <Navigate to={"/"} />;
+  const { login, user } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const directUserToSignup = () => navigate("/sign-up");
@@ -34,9 +32,13 @@ const LoginPage = () => {
     e.preventDefault();
     console.log("handle login", loginCredentials);
     await login(loginCredentials?.email, loginCredentials?.password);
-    // do this only if the login is successful! otherwise you'd get redirected even after a failed login
-    redirectTo("/");
+    //TODO - do this only if the login is successful! otherwise you'd get redirected even after a failed login
+    // if (login == true) {
+    //   redirectTo("/");
+    // }
   };
+
+  if (user) redirectTo("/");
 
   return (
     <div>
@@ -49,8 +51,7 @@ const LoginPage = () => {
           <div className="flex flex-col items-center justify-center">
             <form
               className="flex flex-col items-center"
-              onSubmit={(e) => void handleSubmitLogin(e)}
-            >
+              onSubmit={(e) => void handleSubmitLogin(e)}>
               <div className={"inputContainer"}>
                 <label htmlFor="email"></label>
                 <input
@@ -58,7 +59,7 @@ const LoginPage = () => {
                   id="email"
                   type="text"
                   placeholder="Enter your email here"
-                  value={loginCredentials?.email}
+                  value={loginCredentials?.email.trim()}
                   onChange={handleInputChange}
                   className={"inputBox"}
                 />
@@ -70,7 +71,7 @@ const LoginPage = () => {
                   id="password"
                   type="password"
                   placeholder="Enter your password here"
-                  value={loginCredentials?.password}
+                  value={loginCredentials?.password.trim()}
                   onChange={handleInputChange}
                   className={"inputBox"}
                 />
@@ -82,8 +83,7 @@ const LoginPage = () => {
                   className={
                     "bg-purple-800 hover:bg-purple-900 duration-300 px-5 py-2.5 font-[Poppins] rounded-md text-white md:w-auto w-full"
                   }
-                  type="submit"
-                >
+                  type="submit">
                   Login
                 </button>
               </div>
@@ -93,8 +93,7 @@ const LoginPage = () => {
             <button
               className="bg-purple-800 hover:bg-purple-900 duration-300 px-5 py-2.5 font-[Poppins]
            rounded-md text-white md:w-auto w-full"
-              onClick={directUserToSignup}
-            >
+              onClick={directUserToSignup}>
               Go to signup!
             </button>
           </div>
