@@ -1,3 +1,4 @@
 node_modules/
 .env
 /client/src/components/todo/.createTask.tsx
+notes.md
