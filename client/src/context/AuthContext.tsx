@@ -159,7 +159,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
             console.log("result login", result);
             setUser(result.data.user);
           }
-          //set our user information
         }
       } catch (error) {
         console.log("error :>> ", error);
@@ -311,7 +310,8 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const getProfile = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("you have to login first");
+      // alert("you have to login first");
+      return;
     }
     if (token) {
       const myHeaders = new Headers();
